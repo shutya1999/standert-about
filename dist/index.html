@@ -20,10 +20,10 @@
     <nav class="navigation-block">
         <ul>
             <li>
-                <a href="" class="active">About</a>
+                <a href="#about" class="active">About</a>
             </li>
             <li>
-                <a href="">Founder's Story</a>
+                <a href="#story">Founder's Story</a>
             </li>
             <li>
                 <a href="">Community</a>
@@ -38,7 +38,7 @@
         <div class='scroll-bar__thumb'></div>
     </div>
 
-    <section class="section-scroller about js-section-scroller">
+    <section class="section-scroller about js-menu-section js-section-scroller" id="about">
         <div class="bg-image">
             <picture>
                 <source srcset="./img/components/about-bg__mobile.webp" type="image/webp" media="(max-width: 768px)">
@@ -52,28 +52,32 @@
 
         <div class="screen js-screen">
             <div class="basic-text-block">
-                <h2 class="title">Forged from the streets of Berlin in 2012</h2>
-                <div class="text">
-                    <p>
-                        Standert is now a well-established cycling brand, widely known for its commitment to
-                        craftsmanship,
-                        product design, and passion for cycling.
-                    </p>
+                <div class="animation-block-wrapper">
+                    <h2 class="title _anim-fade-in-up">Forged from the streets of Berlin in 2012</h2>
+                </div>
+                <div class="animation-block-wrapper">
+                    <div class="text _anim-fade-in-up">
+                        <p>
+                            Standert is now a well-established cycling brand, widely known for its commitment to
+                            craftsmanship,
+                            product design, and passion for cycling.
+                        </p>
 
-                    <p>
-                        As a rider-owned and led company, Standert is dedicated to redefine modern cycling by creating
-                        high-quality bicycles that combine the heritage of aluminium and steel with state-of-the-art
-                        performance technology.
-                    </p>
+                        <p>
+                            As a rider-owned and led company, Standert is dedicated to redefine modern cycling by
+                            creating
+                            high-quality bicycles that combine the heritage of aluminium and steel with state-of-the-art
+                            performance technology.
+                        </p>
 
-                    <p>
-                        The company has in the last years rapidly grown into a dynamic startup with big ambitions of
-                        challenging status quo by fostering an innovative, dedicated and creative culture.
-                    </p>
+                        <p>
+                            The company has in the last years rapidly grown into a dynamic startup with big ambitions of
+                            challenging status quo by fostering an innovative, dedicated and creative culture.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="screen js-screen">
             <div class="overlay-eclipse"></div>
 
@@ -90,38 +94,94 @@
             </div>
         </div>
     </section>
-    <section class="section-scroller story js-section-scroller">
+    <section class="section-scroller story js-menu-section js-section-scroller" id="story">
         <div class="bg-image">
             <video src="./img/components/video-2.mp4?v=1" playsinline loop muted autoplay></video>
         </div>
 
         <div class="screen js-screen">
             <div class="basic-text-block">
-                <h2 class="title">“We build bikes that we want to ride ourselves.”</h2>
-                <div class="text">
-                    <p>
-                        This Berlin-based brand began in 2012 with Max von Senger, a product design student and bike
-                        messenger passionate about cycling's balance between effort and exhilaration. Inspired by the
-                        aesthetics of bicycles and elements of culture, fashion, and streetwear, Max built his first
-                        bike while at Universität der Künste.
-                    </p>
+                <div class="animation-block-wrapper">
+                    <h2 class="title _anim-fade-in-up">“We build bikes that we want to ride ourselves.”</h2>
+                </div>
+                <div class="animation-block-wrapper">
+                    <div class="text _anim-fade-in-up">
+                        <p>
+                            This Berlin-based brand began in 2012 with Max von Senger, a product design student and bike
+                            messenger passionate about cycling's balance between effort and exhilaration. Inspired by
+                            the
+                            aesthetics of bicycles and elements of culture, fashion, and streetwear, Max built his first
+                            bike while at Universität der Künste.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen justify-start js-screen">
+            <div class="floating-image">
+                <img src="./img/components/logo.svg" alt="">
+            </div>
+            <div class="basic-text-block">
+                <div class="animation-block-wrapper">
+                    <div class="text center _anim-fade-in-up">
+                        <p>
+                            Deciding on a name for the brand came from common slang within Max’s circle of friends.
+                            “‘Standert’ was something we said all the time, for everything,” he explains. “We used it as
+                            a way to say ‘of course’ or ‘why even ask?’ Especially with that pronunciation of ‘-ert’ at
+                            the end.”
+                        </p>
+                        <p>
+                            On 21 July 2012, Standert opened its doors onto Invalidenstr., the Mitte location that
+                            served as both retail space and company headquarters for the next seven years. “Early on, it
+                            was all about the café,” Max recalls. “Cycle cafés were a new concept, and we wanted to
+                            create a space for people to hang out.”
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="screen justify-start js-screen">
+            <div class="floating-image hidden">
+                <img src="./img/components/logo.svg" alt="">
+            </div>
+            <div class="basic-text-block">
+                <div class="animation-block-wrapper">
+                    <div class="text center _anim-fade-in-up">
+                        <p>
+                            By 2019, Standert was bursting at the seams. Still run by a small team, many of whom had
+                            been there since the beginning—and still in the original space on Invalidenstr. —Standert’s
+                            brand recognition and its bicycles had outpaced the growth and maturity of the company
+                            behind it. A decision had to be made.
+                        </p>
+                        <p>
+                            Soon after, Standert moved headquarters from the café’s crampedbasement to a newly erected
+                            building on Friedrichstr., with aspacious ground-floor showroom that reflected the ambitions
+                            of theup-and-coming brand. The Standert Cycling Hub currently functionsas a meeting point
+                            for the weekly Feierabendrunde rides, as well asthe sole location where one can see the full
+                            collection of Standertmodels in person.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="screen js-screen">
-            <div class="overlay-eclipse"></div>
-
-            <!-- video ratio: ratio-4x3, ratio-16x9, ratio-21x9-->
-            <div class="video-block ratio-16x9">
-                <video src="./img/components/video.mp4" playsinline loop muted></video>
-
-                <div class="controls">
-                    <button class="play-btn"></button>
-                    <button class="pause-btn"></button>
+            <div class="basic-text-block">
+                <div class="image _anim-fade-in">
+                    <img src="./img/components/cat-img.png" alt="">
                 </div>
-
-                <button class="mute-controls"></button>
+                <div class="animation-block-wrapper">
+                    <div class="text center _anim-fade-in-up">
+                        <p>
+                            A decade of organic growth and community building proved to be a winning combination for
+                            this now globally recognized bike brand. As Standert embarks on yet another new chapter in
+                            the company’s history, Max and Anna von Senger look to the future with confidence.“Let’s
+                            make the bike community a friendly and welcoming one,” they request, “In the spirit of what
+                            we think is the way forward for cycling.”
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

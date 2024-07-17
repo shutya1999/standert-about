@@ -32,7 +32,7 @@ gsap.registerPlugin(ScrollTrigger);
 let sectionsScroller = document.querySelectorAll(".js-section-scroller");
 
 if (sectionsScroller.length){
-    sectionsScroller.forEach(sectionScroller => {
+    sectionsScroller.forEach((sectionScroller, index) => {
         let screens = gsap.utils.toArray(sectionScroller.querySelectorAll(".js-screen"));
 
         let scrollTween = gsap.to(screens, {
@@ -42,12 +42,39 @@ if (sectionsScroller.length){
                 trigger: sectionScroller,
                 pin: true,
                 scrub: 1,
+                onEnter: (e) => {
+                    let interval = (index === 0) ? 300 : 0;
+
+                    if(e.trigger.querySelector('.js-screen')){
+                        setTimeout(() => {
+                            e.trigger.querySelector('.js-screen').classList.add('start-animation');
+                        }, interval)
+                    }
+                },
                 // snap: 1 / (screens.length - 1),
-                end: () => "+=" + sectionScroller.offsetWidth
+                end: () => {
+                    return (screens.length > 1) ? `+=${sectionScroller.offsetWidth * 2}` : '0'
+                },
+                // markers: true,
             }
         });
 
 
+        // Trigger for screen
+        screens.forEach(screen => {
+            ScrollTrigger.create({
+                trigger: screen,
+                containerAnimation: scrollTween,
+                onEnter: (e) => {
+                    screen.classList.add('start-animation');
+                },
+                start: "start 50%",
+               // markers: true
+            });
+        })
+
+
+        // Overlay animation
         if (sectionScroller.querySelector('.overlay-eclipse')){
             const overlayEclipse = sectionScroller.querySelectorAll('.overlay-eclipse');
 
@@ -63,6 +90,28 @@ if (sectionsScroller.length){
                         end: "center 50%",
                         scrub: true,
                         // markers: true
+                    }
+                });
+            })
+        }
+
+        // floating image animation
+        if (sectionScroller.querySelector('.floating-image')){
+            const floatingImages = sectionScroller.querySelectorAll('.floating-image');
+
+            floatingImages.forEach(image => {
+                gsap.to(image, {
+                    x: "50%",
+                    // xPercent: -100,
+                    // opacity: 0,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: image,
+                        containerAnimation: scrollTween,
+                        start: "-100% 100%",
+                        end: "50% 50%",
+                        scrub: true,
+                        //markers: true
                     }
                 });
             })
@@ -95,60 +144,97 @@ if (scrollThumb){
 // Video play/pause controls
 let videos = document.querySelectorAll('video');
 if (videos.length){
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5 // 50% of the video block should be visible
-    };
-
-    const observerCallback = (entries, observer) => {
+    const observerCallbackVideo = (entries, observer) => {
         entries.forEach(entry => {
             const video = entry.target;
-            if (entry.isIntersecting) {
-                // In viewport
-                video.play();
-                video.closest('.video-block').classList.add('_played');
-            } else {
-                // out viewport
-                video.pause();
-                video.closest('.video-block').classList.remove('_played');
+            if (video.closest('.video-block')){
+                if (entry.isIntersecting) {
+                    // In viewport
+                    video.play();
+                    video.closest('.video-block').classList.add('_played');
+                } else {
+                    // out viewport
+                    video.pause();
+                    video.closest('.video-block').classList.remove('_played');
+                }
             }
         });
     };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const observerVideo = new IntersectionObserver(observerCallbackVideo, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5 // 50% of the video block should be visible
+    });
 
     videos.forEach(video => {
-        observer.observe(video);
+        observerVideo.observe(video);
 
-        const playBtn = video.closest('.video-block').querySelector('.play-btn'),
-            pauseBtn = video.closest('.video-block').querySelector('.pause-btn'),
-            muteControls = video.closest('.video-block').querySelector('.mute-controls');
+        if(video.closest('.video-block')){
+            const playBtn = video.closest('.video-block').querySelector('.play-btn'),
+                pauseBtn = video.closest('.video-block').querySelector('.pause-btn'),
+                muteControls = video.closest('.video-block').querySelector('.mute-controls');
 
-        if (playBtn && pauseBtn && muteControls){
-            playBtn.addEventListener('click', () => {
-                video.play();
-                video.closest('.video-block').classList.add('_played');
-            })
+            if (playBtn && pauseBtn && muteControls){
+                playBtn.addEventListener('click', () => {
+                    video.play();
+                    video.closest('.video-block').classList.add('_played');
+                })
 
-            pauseBtn.addEventListener('click', () => {
-                video.pause();
-                video.closest('.video-block').classList.remove('_played');
-            })
+                pauseBtn.addEventListener('click', () => {
+                    video.pause();
+                    video.closest('.video-block').classList.remove('_played');
+                })
 
-            muteControls.addEventListener('click', () => {
-                if (video.muted){
-                    video.muted = false;
-                    video.closest('.video-block').classList.add('_unmute');
-                }else {
-                    video.muted = true;
-                    video.closest('.video-block').classList.remove('_unmute');
-                }
-            })
+                muteControls.addEventListener('click', () => {
+                    if (video.muted){
+                        video.muted = false;
+                        video.closest('.video-block').classList.add('_unmute');
+                    }else {
+                        video.muted = true;
+                        video.closest('.video-block').classList.remove('_unmute');
+                    }
+                })
+            }
         }
-
     })
-
 }
 
+// Menu scroll
+const sectionInMenu = document.querySelectorAll('.js-menu-section'),
+    menuElements = document.querySelectorAll('nav a');
 
+if (sectionInMenu.length){
+    const observerCallbackSection = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                removeClass(menuElements, 'active');
+                if (document.querySelector(`nav a[href="#${target.id}"]`)){
+                    document.querySelector(`nav a[href="#${target.id}"]`).classList.add('active');
+                }
+
+            }
+        });
+    };
+
+    const observerSection = new IntersectionObserver(observerCallbackSection, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1 // 50% of the video block should be visible
+    });
+    sectionInMenu.forEach(section => {
+        observerSection.observe(section);
+    })
+
+
+    menuElements.forEach(menuItem => {
+        menuItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            const id = menuItem.getAttribute('href');
+            document.querySelector(id).scrollIntoView({
+                behavior: "smooth",
+            });
+        })
+    })
+}
