@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/components.css">
+
+</head>
+<body>
+
+<div class="main" id="main">
+    <nav class="navigation-block">
+        <ul>
+            <li>
+                <a href="" class="active">About</a>
+            </li>
+            <li>
+                <a href="">Founder's Story</a>
+            </li>
+            <li>
+                <a href="">Community</a>
+            </li>
+            <li>
+                <a href="">Company</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class='scroll-bar'>
+        <div class='scroll-bar__thumb'></div>
+    </div>
+
+    <section class="section-scroller about js-section-scroller">
+        <div class="bg-image">
+            <picture>
+                <source srcset="./img/components/about-bg__mobile.webp" type="image/webp" media="(max-width: 768px)">
+                <source srcset="./img/components/about-bg__mobile.jpg" type="image/jpeg" media="(max-width: 768px)">
+
+                <source srcset="./img/components/about-bg__desktop.webp" type="image/webp">
+                <source srcset="./img/components/about-bg__desktop.jpg" type="image/jpeg">
+                <img src="./img/components/about-bg__desktop.jpg" alt="">
+            </picture>
+        </div>
+
+        <div class="screen js-screen">
+            <div class="basic-text-block">
+                <h2 class="title">Forged from the streets of Berlin in 2012</h2>
+                <div class="text">
+                    <p>
+                        Standert is now a well-established cycling brand, widely known for its commitment to
+                        craftsmanship,
+                        product design, and passion for cycling.
+                    </p>
+
+                    <p>
+                        As a rider-owned and led company, Standert is dedicated to redefine modern cycling by creating
+                        high-quality bicycles that combine the heritage of aluminium and steel with state-of-the-art
+                        performance technology.
+                    </p>
+
+                    <p>
+                        The company has in the last years rapidly grown into a dynamic startup with big ambitions of
+                        challenging status quo by fostering an innovative, dedicated and creative culture.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen js-screen">
+            <div class="overlay-eclipse"></div>
+
+            <!-- video ratio: ratio-4x3, ratio-16x9, ratio-21x9-->
+            <div class="video-block ratio-16x9">
+                <video src="./img/components/video.mp4" playsinline loop muted></video>
+
+                <div class="controls">
+                    <button class="play-btn"></button>
+                    <button class="pause-btn"></button>
+                </div>
+
+                <button class="mute-controls"></button>
+            </div>
+        </div>
+    </section>
+    <section class="section-scroller story js-section-scroller">
+        <div class="bg-image">
+            <video src="./img/components/video-2.mp4?v=1" playsinline loop muted autoplay></video>
+        </div>
+
+        <div class="screen js-screen">
+            <div class="basic-text-block">
+                <h2 class="title">“We build bikes that we want to ride ourselves.”</h2>
+                <div class="text">
+                    <p>
+                        This Berlin-based brand began in 2012 with Max von Senger, a product design student and bike
+                        messenger passionate about cycling's balance between effort and exhilaration. Inspired by the
+                        aesthetics of bicycles and elements of culture, fashion, and streetwear, Max built his first
+                        bike while at Universität der Künste.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen js-screen">
+            <div class="overlay-eclipse"></div>
+
+            <!-- video ratio: ratio-4x3, ratio-16x9, ratio-21x9-->
+            <div class="video-block ratio-16x9">
+                <video src="./img/components/video.mp4" playsinline loop muted></video>
+
+                <div class="controls">
+                    <button class="play-btn"></button>
+                    <button class="pause-btn"></button>
+                </div>
+
+                <button class="mute-controls"></button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+
+<script src="./js/components.js"></script>
+</body>
+</html>

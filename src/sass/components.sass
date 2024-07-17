@@ -1,0 +1,302 @@
+@import "vars"
+
+//400
+@font-face
+  font-family: 'EurostileExtended'
+  src: local('EurostileExtended'), local('Montserrat Alternates'), url('../fonts/EurostileExtended.woff2') format('woff2'), url('../fonts/EurostileExtended.woff') format('woff'), url('../fonts/EurostileExtended.ttf') format('truetype')
+  font-style: normal
+  font-display: swap
+
+*
+  box-sizing: border-box
+  &::before, &::after
+    box-sizing: border-box
+
+// \:root
+
+picture
+  display: flex
+  align-items: center
+  justify-content: center
+
+ul[class], ol[class]
+  padding: 0
+
+body, h1, h2, h3, h4, h5, h6, p, li, figure, figcaption, blockquote, dl, dd
+  margin: 0
+
+h1, h2, h3, h4, h5, h6
+  font-size: inherit
+  font-weight: inherit
+
+
+html
+  font-family: "Inter", sans-serif
+  font-optical-sizing: auto
+  font-weight: 400
+  font-style: normal
+  font-variation-settings: "slnt" 0
+  font-size: 20px
+  line-height: 24px
+  color: white
+  &.lock
+    & body
+      overflow: hidden
+
+body
+  scroll-behavior: smooth
+  background-color: #090401
+  overflow: auto
+  -ms-overflow-style: none
+  &::-webkit-scrollbar
+    opacity: 0
+    display: none
+    width: 0
+    height: 0
+  
+
+ul[class], ol[class]
+  list-style: none
+
+ul, ol
+  list-style: none
+  margin: 0
+  padding: 0
+
+a
+  text-decoration: none
+//color: $dark-blue
+
+img
+  max-width: 100%
+  display: block
+
+
+article > * + *
+  margin-top: 1em
+
+input, button, textarea, select
+  font: inherit
+
+
+#main
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+  
+
+.custom-scrollbar
+  @include scrollbar-styling
+
+.scroll-bar
+  z-index: 99999
+  position: fixed
+  width: 3px
+  height: 100%
+  background: rgba(0, 0, 0, 0)
+  top: 0
+  left: 0
+  margin: auto
+  transition: opacity 0.3s
+  & .scroll-bar__thumb
+    width: 100%
+    height: var(--thumb-height, 100px)
+    background: #D9D9D9
+
+
+
+
+
+.navigation-block
+  position: fixed
+  right: 40px
+  bottom: 60px
+  z-index: 2
+  & ul
+    list-style: none
+  & a
+    font-size: 20px
+    font-weight: 400
+    line-height: 24px
+    text-align: right
+    padding: 7px 18px
+    display: block
+    color: white
+    border-radius: 100px
+    transition: all .3s
+    &.active
+      background-color: #F3F3F3
+      color: black
+
+
+
+.section-scroller
+  display: flex
+  flex-wrap: nowrap
+  height: 100%
+  position: relative
+  & .bg-image
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    & img, & video
+      width: 100%
+      height: 100%
+      object-fit: cover
+
+  & .screen
+    height: 100%
+    min-width: calc(var(--vw, 1vw) * 100)
+    display: flex
+    align-items: center
+    justify-content: center
+    position: relative
+
+
+
+
+.basic-text-block
+  width: 100%
+  max-width: calc(var(--vw, 1vw) * 64)
+  margin: 0 auto
+  & .title
+    font-family: 'EurostileExtended', sans-serif
+    font-size: 50px
+    font-weight: 700
+    line-height: 55px
+    max-width: 90%
+    margin-bottom: 70px
+  & .text
+    max-width: 64%
+    margin: 0 0 0 auto
+    & p
+      margin: 24px 0
+      &:last-child
+        margin-bottom: 0
+      &:first-child
+        margin-top: 0
+
+
+.video-block
+  width: 100%
+  max-width: calc(var(--vw, 1vw) * 66)
+  margin: 0 auto
+  position: relative
+  z-index: 2
+  &:before
+    content: ""
+    display: block
+    padding-top: var(--bs-aspect-ratio)
+  &.ratio-16x9
+    --bs-aspect-ratio: calc(9 / 16 * 100%)
+  &.ratio-21x9
+    --bs-aspect-ratio: calc(9 / 21 * 100%)
+  &.ratio-4x3
+    --bs-aspect-ratio: calc(3 / 4 * 100%)
+  &.ratio-1x1
+    --bs-aspect-ratio: 100%
+
+  & video
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: 45px
+
+  &:hover
+    & .controls
+      & button
+        &.pause-btn
+          opacity: 0
+        &.play-btn
+          opacity: 1
+          pointer-events: auto
+    & .mute-controls
+      opacity: 1
+    &._played
+      & .controls
+        & button
+          &.pause-btn
+            opacity: 1
+            pointer-events: auto
+          &.play-btn
+            opacity: 0
+    &._unmute
+      & .mute-controls
+        background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg width='800px' height='800px' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' fill='none'%3E%3Cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.5 21H8a1 1 0 01-1-1v-8a1 1 0 011-1h7l5-5 1.586-1.586C22.846 3.154 25 4.047 25 5.828V6m-8 17l4.586 4.586c1.26 1.26 3.414.367 3.414-1.414V14.5M7 28L29 6'/%3E%3C/svg%3E")
+
+
+  & .controls
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 32px
+    height: 32px
+    z-index: 1
+    & button
+      position: absolute
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      opacity: 0
+      outline: none
+      padding: 0
+      border: none
+      background: none
+      transition: all .3s
+      cursor: pointer
+      pointer-events: none
+      @include bg-center
+        background-size: contain
+      &.play-btn
+        background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='iso-8859-1'?%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg fill='%23ffffff' height='800px' width='800px' version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 460.114 460.114' xml:space='preserve'%3E%3Cg%3E%3Cg%3E%3Cpath d='M393.538,203.629L102.557,5.543c-9.793-6.666-22.468-7.372-32.94-1.832c-10.472,5.538-17.022,16.413-17.022,28.26v396.173 c0,11.846,6.55,22.721,17.022,28.26c10.471,5.539,23.147,4.834,32.94-1.832l290.981-198.087 c8.746-5.954,13.98-15.848,13.98-26.428C407.519,219.477,402.285,209.582,393.538,203.629z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+      &.pause-btn
+        background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg width='800px' height='800px' viewBox='-1 0 8 8' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Epause [%231006]%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cdefs%3E%3C/defs%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='Dribbble-Light-Preview' transform='translate(-227.000000, -3765.000000)' fill='%23ffffff'%3E%3Cg id='icons' transform='translate(56.000000, 160.000000)'%3E%3Cpath d='M172,3605 C171.448,3605 171,3605.448 171,3606 L171,3612 C171,3612.552 171.448,3613 172,3613 C172.552,3613 173,3612.552 173,3612 L173,3606 C173,3605.448 172.552,3605 172,3605 M177,3606 L177,3612 C177,3612.552 176.552,3613 176,3613 C175.448,3613 175,3612.552 175,3612 L175,3606 C175,3605.448 175.448,3605 176,3605 C176.552,3605 177,3605.448 177,3606' id='pause-[%231006]'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+
+  & .mute-controls
+    position: absolute
+    left: 20px
+    bottom: 20px
+    width: 32px
+    height: 32px
+    z-index: 1
+    transition: all .3s
+    cursor: pointer
+    outline: none
+    padding: 0
+    opacity: 0
+    border: none
+    background: none
+    background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='utf-8'?%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg width='800px' height='800px' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' fill='none'%3E%3Cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 12v8a1 1 0 001 1h7l6.586 6.586c1.26 1.26 3.414.367 3.414-1.414V5.828c0-1.781-2.154-2.674-3.414-1.414L20 6l-5 5H8a1 1 0 00-1 1z'/%3E%3C/svg%3E")
+    @include bg-center
+      background-size: contain
+
+
+
+
+
+
+
+
+.overlay-eclipse
+  position: absolute
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+  pointer-events: none
+  z-index: 1
+  background: rgba(0,0,0,0.8)
+  opacity: 0
+
+
+
+
+
+
+
