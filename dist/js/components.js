@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
     document.documentElement.style.setProperty('--vw', "".concat(vw, "px"));
   });
 });
+
 // Remove class
 function removeClass(nodes, className) {
   nodes.forEach(function (node) {
@@ -34,17 +35,18 @@ window.addEventListener('load', function () {
       var screens = gsap.utils.toArray(sectionScroller.querySelectorAll(".js-screen"));
       var scrollTween = gsap.to(screens, {
         xPercent: -100 * (screens.length - 1),
+        // x: () => window.innerWidth,
+        duration: 2,
         ease: "none",
         scrollTrigger: {
           trigger: sectionScroller,
           pin: true,
+          fastScrollEnd: true,
+          preventOverlaps: true,
           scrub: 1,
           onEnter: function onEnter(e) {
-            var interval = index === 0 ? 100 : 0;
             if (e.trigger.querySelector('.js-screen')) {
-              // setTimeout(() => {
               e.trigger.querySelector('.js-screen').classList.add('start-animation');
-              // }, interval)
             }
           },
           // snap: 1 / (screens.length - 1),
@@ -56,10 +58,10 @@ window.addEventListener('load', function () {
       });
 
       // Trigger for screen
-      screens.forEach(function (screen) {
+      screens.forEach(function (screen, index) {
         ScrollTrigger.create({
           trigger: screen,
-          containerAnimation: scrollTween,
+          containerAnimation: index === 0 ? false : scrollTween,
           onEnter: function onEnter(e) {
             screen.classList.add('start-animation');
           },

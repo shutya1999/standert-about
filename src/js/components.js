@@ -13,6 +13,7 @@ window.addEventListener('load', () => {
         document.documentElement.style.setProperty('--vw', `${vw}px`);
     });
 })
+
 // Remove class
 function removeClass(nodes, className) {
     nodes.forEach(node => {
@@ -33,24 +34,24 @@ window.addEventListener('load', () => {
 // Init scroll effect for section
     let sectionsScroller = document.querySelectorAll(".js-section-scroller");
 
-    if (sectionsScroller.length){
+    if (sectionsScroller.length) {
         sectionsScroller.forEach((sectionScroller, index) => {
             let screens = gsap.utils.toArray(sectionScroller.querySelectorAll(".js-screen"));
 
             let scrollTween = gsap.to(screens, {
                 xPercent: -100 * (screens.length - 1),
+                // x: () => window.innerWidth,
+                duration: 2,
                 ease: "none",
                 scrollTrigger: {
                     trigger: sectionScroller,
                     pin: true,
+                    fastScrollEnd: true,
+                    preventOverlaps: true,
                     scrub: 1,
                     onEnter: (e) => {
-                        let interval = (index === 0) ? 100 : 0;
-
-                        if(e.trigger.querySelector('.js-screen')){
-                            // setTimeout(() => {
-                                e.trigger.querySelector('.js-screen').classList.add('start-animation');
-                            // }, interval)
+                        if (e.trigger.querySelector('.js-screen')) {
+                            e.trigger.querySelector('.js-screen').classList.add('start-animation');
                         }
                     },
                     // snap: 1 / (screens.length - 1),
@@ -63,21 +64,22 @@ window.addEventListener('load', () => {
 
 
             // Trigger for screen
-            screens.forEach(screen => {
+            screens.forEach((screen, index) => {
+
                 ScrollTrigger.create({
                     trigger: screen,
-                    containerAnimation: scrollTween,
+                    containerAnimation: (index === 0) ? false : scrollTween,
                     onEnter: (e) => {
                         screen.classList.add('start-animation');
                     },
                     start: "start 50%",
                     // markers: true
-                });
+                })
             })
 
 
             // Overlay animation
-            if (sectionScroller.querySelector('.overlay-eclipse')){
+            if (sectionScroller.querySelector('.overlay-eclipse')) {
                 const overlayEclipse = sectionScroller.querySelectorAll('.overlay-eclipse');
 
                 overlayEclipse.forEach(overlay => {
@@ -98,7 +100,7 @@ window.addEventListener('load', () => {
             }
 
             // floating image animation
-            if (sectionScroller.querySelector('.floating-image')){
+            if (sectionScroller.querySelector('.floating-image')) {
                 const floatingImages = sectionScroller.querySelectorAll('.floating-image');
 
                 floatingImages.forEach(image => {
@@ -125,7 +127,7 @@ window.addEventListener('load', () => {
 
 // Custom scrollbar
     const scrollThumb = document.querySelector('.scroll-bar__thumb');
-    if (scrollThumb){
+    if (scrollThumb) {
         let thumbHeight = Math.ceil(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight));
         scrollThumb.style.setProperty('--thumb-height', thumbHeight + "px")
 
@@ -145,11 +147,11 @@ window.addEventListener('load', () => {
 
 // Video play/pause controls
     let videos = document.querySelectorAll('video');
-    if (videos.length){
+    if (videos.length) {
         const observerCallbackVideo = (entries, observer) => {
             entries.forEach(entry => {
                 const video = entry.target;
-                if (video.closest('.video-block')){
+                if (video.closest('.video-block')) {
                     if (entry.isIntersecting) {
                         // In viewport
                         video.play();
@@ -172,12 +174,12 @@ window.addEventListener('load', () => {
         videos.forEach(video => {
             observerVideo.observe(video);
 
-            if(video.closest('.video-block')){
+            if (video.closest('.video-block')) {
                 const playBtn = video.closest('.video-block').querySelector('.play-btn'),
                     pauseBtn = video.closest('.video-block').querySelector('.pause-btn'),
                     muteControls = video.closest('.video-block').querySelector('.mute-controls');
 
-                if (playBtn && pauseBtn && muteControls){
+                if (playBtn && pauseBtn && muteControls) {
                     playBtn.addEventListener('click', () => {
                         video.play();
                         video.closest('.video-block').classList.add('_played');
@@ -189,10 +191,10 @@ window.addEventListener('load', () => {
                     })
 
                     muteControls.addEventListener('click', () => {
-                        if (video.muted){
+                        if (video.muted) {
                             video.muted = false;
                             video.closest('.video-block').classList.add('_unmute');
-                        }else {
+                        } else {
                             video.muted = true;
                             video.closest('.video-block').classList.remove('_unmute');
                         }
@@ -206,13 +208,13 @@ window.addEventListener('load', () => {
     const sectionInMenu = document.querySelectorAll('.js-menu-section'),
         menuElements = document.querySelectorAll('nav a');
 
-    if (sectionInMenu.length){
+    if (sectionInMenu.length) {
         const observerCallbackSection = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const target = entry.target;
                     removeClass(menuElements, 'active');
-                    if (document.querySelector(`nav a[href="#${target.id}"]`)){
+                    if (document.querySelector(`nav a[href="#${target.id}"]`)) {
                         document.querySelector(`nav a[href="#${target.id}"]`).classList.add('active');
                     }
 
