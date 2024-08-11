@@ -49,11 +49,11 @@ body
   overflow: auto
   -ms-overflow-style: none
   &::-webkit-scrollbar
-   opacity: 0
-   display: none
-   width: 0
-   height: 0
-  
+    opacity: 0
+    display: none
+    width: 0
+    height: 0
+
 
 ul[class], ol[class]
   list-style: none
@@ -96,6 +96,15 @@ input, button, textarea, select
   opacity: 1
   transform: translateY(0px)
 
+
+// Animation clip path
+._anim-clip-path
+  clip-path: inset(0 0 100% 0)
+  transition: clip-path 0.5s cubic-bezier(.76, 0, .24, 1)
+
+._anim-clip-path.start-animation, .start-animation ._anim-clip-path
+  clip-path: inset(0 0 0 0)
+
 // Animation fade in
 ._anim-fade-in
   opacity: 0
@@ -103,7 +112,7 @@ input, button, textarea, select
 
 ._anim-fade-in.start-animation, .start-animation ._anim-fade-in
   opacity: 1
-  
+
 
 .custom-scrollbar
   @include scrollbar-styling
@@ -150,10 +159,9 @@ input, button, textarea, select
 
 
 
-.section-scroller
-  display: flex
-  flex-wrap: nowrap
-  height: 100%
+.swiper
+  //height: 100%
+  height: 100vh
   position: relative
   & .bg-image
     position: absolute
@@ -168,6 +176,14 @@ input, button, textarea, select
       width: 100%
       height: 100%
       object-fit: cover
+  & .swiper-wrapper
+    transition-delay: 400ms
+  & .swiper-slide
+    transition: all .5s
+    &.anim-hide
+      opacity: 0
+
+
 
   & .screen
     height: 100%
@@ -177,9 +193,6 @@ input, button, textarea, select
     align-items: center
     justify-content: center
     position: relative
-    //border: 1px solid white
-    //border-right-width: 0.5px
-    //border-left-width: 0.5px
     &.align-start
       align-items: flex-start
     &.justify-start
@@ -199,13 +212,14 @@ input, button, textarea, select
     line-height: 55px
     max-width: 90%
     margin-bottom: 70px
-    transition: all 1s .2s
+    //transition: all 1s .2s
+    transition: all 1s
     &.center
       margin: 0 auto
   & .text
     max-width: 64%
     margin: 0 0 0 auto
-    transition: all 1s .3s
+    transition: all 1s
     &.center
       margin: 0 auto
     & p
@@ -341,7 +355,7 @@ input, button, textarea, select
   pointer-events: none
   z-index: 1
   background: rgba(0,0,0,0.8)
-  opacity: 0
+  //opacity: 0
 
 
 //.story
