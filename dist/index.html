@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Home</title>
@@ -11,189 +12,307 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/components.css?v=001">
+    <link rel="stylesheet" href="./css/components-copy.css?v=001">
 
 </head>
+
 <body>
 
-<div class="main" id="main">
-    <nav class="navigation-block">
-        <ul>
-            <li>
-                <a href="#about" class="active">About</a>
-            </li>
-            <li>
-                <a href="#story">Founder's Story</a>
-            </li>
-            <li>
-                <a href="">Community</a>
-            </li>
-            <li>
-                <a href="">Company</a>
-            </li>
-        </ul>
-    </nav>
+    <div class="main" id="main">
+        <nav class="navigation-block">
+            <ul>
+                <li>
+                    <a href="#about" class="active">About</a>
+                </li>
+                <li>
+                    <a href="#story">Founder's Story</a>
+                </li>
+                <li>
+                    <a href="">Community</a>
+                </li>
+                <li>
+                    <a href="">Company</a>
+                </li>
+            </ul>
+        </nav>
 
-    <div class='scroll-bar'>
-        <div class='scroll-bar__thumb'></div>
+        <progress max="100" value="0"></progress>
+
+        <div class='scroll-bar'>
+            <div class='scroll-bar__thumb'></div>
+        </div>
+
+        <section class="section-scroller about js-menu-section js-section-scroller" id="about">
+
+            <div class="bg-image">
+                <picture>
+                    <source srcset="./img/components/about-bg__mobile.webp" type="image/webp" media="(max-width: 768px)">
+                    <source srcset="./img/components/about-bg__mobile.jpg" type="image/jpeg" media="(max-width: 768px)">
+
+                    <source srcset="./img/components/about-bg__desktop.webp" type="image/webp">
+                    <source srcset="./img/components/about-bg__desktop.jpg" type="image/jpeg">
+                    <img src="./img/components/about-bg__desktop.jpg" alt="">
+                </picture>
+            </div>
+
+            <div class="section-wrapper" style="--length: 2">
+                <div class="screen js-screen">
+                    <div class="screen-wrapper">
+                        <div class="basic-text-block">
+                            <div class="animation-block-wrapper">
+                                <div class="title">
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">Forged from the streets</span>
+                                    </div>
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">of Berlin in 2012</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animation-block-wrapper">
+                                <div class="text">
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            Standert is now a well-established cycling brand, widely known for its commitment to
+                                            craftsmanship,
+                                            product design, and passion for cycling.
+                                        </p>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            As a rider-owned and led company, Standert is dedicated to redefine modern cycling
+                                            by
+                                            creating
+                                            high-quality bicycles that combine the heritage of aluminium and steel with
+                                            state-of-the-art
+                                            performance technology.
+                                        </p>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            The company has in the last years rapidly grown into a dynamic startup with big
+                                            ambitions of
+                                            challenging status quo by fostering an innovative, dedicated and creative culture.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="screen js-screen mob-justify-center">
+                    <div class="screen-wrapper">
+                        <div class="overlay-eclipse _anim-fade-in"></div>
+
+                        <!-- video ratio: ratio-4x3, ratio-16x9, ratio-21x9-->
+                        <div class="video-block ratio-16x9 _anim-clip-path">
+                            <video src="./img/components/video.mp4?v=001" playsinline loop muted></video>
+
+                            <div class="controls">
+                                <button class="play-btn"></button>
+                                <button class="pause-btn"></button>
+                            </div>
+
+                            <button class="mute-controls"></button>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="screen js-screen">-->
+<!--                    <div class="screen-wrapper">-->
+<!--                    </div>-->
+<!--                </div>-->
+
+            </div>
+
+
+        </section>
+        <section class="section-scroller story js-menu-section js-section-scroller" id="story">
+            <div class="bg-image">
+                <video src="./img/components/video-2.mp4?v=1" playsinline loop muted autoplay></video>
+            </div>
+
+
+            <div class="section-wrapper" style="--length: 5">
+                <div class="screen js-screen">
+                    <div class="screen-wrapper">
+                        <div class="basic-text-block">
+                            <div class="animation-block-wrapper">
+                                <div class="title">
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">“We build bikes that we</span>
+                                    </div>
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">want to ride ourselves.”</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animation-block-wrapper">
+                                <div class="text _anim-fade-in-up">
+                                    <p>
+                                        This Berlin-based brand began in 2012 with Max von Senger, a product design student
+                                        and bike
+                                        messenger passionate about cycling's balance between effort and exhilaration.
+                                        Inspired by
+                                        the
+                                        aesthetics of bicycles and elements of culture, fashion, and streetwear, Max built
+                                        his first
+                                        bike while at Universität der Künste.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="screen justify-start js-screen">
+                    <div class="screen-wrapper">
+                        <div class="floating-image hidden">
+                            <img src="./img/components/logo.svg" alt="">
+                        </div>
+                        <div class="basic-text-block">
+                            <div class="animation-block-wrapper">
+                                <div class="text center _anim-fade-in-up">
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            Deciding on a name for the brand came from common slang within Max’s circle of
+                                            friends. “‘Standert’ was something we said all the time, for everything,”
+                                            he explains. “We used it as a way to say ‘of course’ or ‘why even ask?’
+                                            Especially with that pronunciation of ‘-ert’ at the end.”
+                                        </p>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            On 21 July 2012, Standert opened its doors onto Invalidenstr., the Mitte
+                                            location that served as both retail space and company headquarters for the
+                                            next seven years. “Early on, it was all about the café,” Max recalls.
+                                            “Cycle cafés were a new concept, and we wanted to create a space for people
+                                            to hang out.”
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="screen justify-start js-screen">
+                    <div class="screen-wrapper">
+                        <div class="floating-image">
+                            <img src="./img/components/logo.svg" alt="">
+                        </div>
+                        <div class="basic-text-block">
+                            <div class="animation-block-wrapper">
+                                <div class="text center _anim-fade-in-up">
+
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            By 2019, Standert was bursting at the seams. Still run by a small team,
+                                            many of whom had been there since the beginning—and still in the original
+                                            space on Invalidenstr. —Standert’s brand recognition and its bicycles had
+                                            outpaced the growth and maturity of the company behind it. A decision
+                                            had to be made.
+                                        </p>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <p class="_anim-fade-in-up">
+                                            Soon after, Standert moved headquarters from the café’s crampedbasement to
+                                            a newly erected building on Friedrichstr., with aspacious ground-floor
+                                            showroom that reflected the ambitions of theup-and-coming brand. The
+                                            Standert Cycling Hub currently functionsas a meeting point
+                                            for the weekly Feierabendrunde rides, as well asthe sole location
+                                            where one can see the full collection of Standertmodels in person.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="screen js-screen">
+                    <div class="screen-wrapper">
+                        <div class="block-with-images">
+                            <div class="animation-block-wrapper">
+
+                                <div class="title">
+
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">“Let’s make the bike</span>
+                                    </div>
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">community a friendly</span>
+                                    </div>
+                                    <div class="text-wrap">
+                                        <span class="_anim-fade-in-up">and welcoming one.”</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="images">
+                                <div class="img">
+                                    <picture>
+                                        <source srcset="./img/components/image-1.webp" type="image/webp">
+                                        <source srcset="./img/components/image-1.jpg" type="image/jpeg">
+                                        <img class="_anim-clip-path" src="./img/components/image-1.jpg" alt="">
+                                    </picture>
+                                </div>
+                                <div class="img ">
+                                    <picture>
+                                        <source srcset="./img/components/image-2.webp" type="image/webp">
+                                        <source srcset="./img/components/image-2.jpg" type="image/jpeg">
+                                        <img class="_anim-clip-path" src="./img/components/image-2.jpg" alt="">
+                                    </picture>
+                                </div>
+                                <div class="img ">
+                                    <picture>
+                                        <source srcset="./img/components/image-3.webp" type="image/webp">
+                                        <source srcset="./img/components/image-3.jpg" type="image/jpeg">
+                                        <img class="_anim-clip-path" src="./img/components/image-3.jpg" alt="">
+                                    </picture>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="screen js-screen">
+                    <div class="screen-wrapper">
+                        <div class="basic-text-block">
+                            <div class="image _anim-clip-path">
+                                <img src="./img/components/cat-img.png" alt="">
+                            </div>
+                            <div class="animation-block-wrapper">
+                                <div class="text center _anim-fade-in-up">
+                                    <p>
+                                        A decade of organic growth and community building proved to be a winning combination
+                                        for
+                                        this now globally recognized bike brand. As Standert embarks on yet another new
+                                        chapter in
+                                        the company’s history, Max and Anna von Senger look to the future with
+                                        confidence.“Let’s
+                                        make the bike community a friendly and welcoming one,” they request, “In the spirit
+                                        of what
+                                        we think is the way forward for cycling.”
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     </div>
 
-    <section class="section-scroller about js-menu-section js-section-scroller" id="about">
-        <div class="bg-image">
-            <picture>
-                <source srcset="./img/components/about-bg__mobile.webp" type="image/webp" media="(max-width: 768px)">
-                <source srcset="./img/components/about-bg__mobile.jpg" type="image/jpeg" media="(max-width: 768px)">
-
-                <source srcset="./img/components/about-bg__desktop.webp" type="image/webp">
-                <source srcset="./img/components/about-bg__desktop.jpg" type="image/jpeg">
-                <img src="./img/components/about-bg__desktop.jpg" alt="">
-            </picture>
-        </div>
-
-        <div class="screen js-screen">
-            <div class="basic-text-block">
-                <div class="animation-block-wrapper">
-                    <h2 class="title _anim-fade-in-up">Forged from the streets of Berlin in 2012</h2>
-                </div>
-                <div class="animation-block-wrapper">
-                    <div class="text _anim-fade-in-up">
-                        <p>
-                            Standert is now a well-established cycling brand, widely known for its commitment to
-                            craftsmanship,
-                            product design, and passion for cycling.
-                        </p>
-
-                        <p>
-                            As a rider-owned and led company, Standert is dedicated to redefine modern cycling by
-                            creating
-                            high-quality bicycles that combine the heritage of aluminium and steel with state-of-the-art
-                            performance technology.
-                        </p>
-
-                        <p>
-                            The company has in the last years rapidly grown into a dynamic startup with big ambitions of
-                            challenging status quo by fostering an innovative, dedicated and creative culture.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="screen js-screen mob-justify-center">
-            <div class="overlay-eclipse"></div>
-
-            <!-- video ratio: ratio-4x3, ratio-16x9, ratio-21x9-->
-            <div class="video-block ratio-16x9">
-                <video src="./img/components/video.mp4" playsinline loop muted></video>
-
-                <div class="controls">
-                    <button class="play-btn"></button>
-                    <button class="pause-btn"></button>
-                </div>
-
-                <button class="mute-controls"></button>
-            </div>
-        </div>
-    </section>
-    <section class="section-scroller story js-menu-section js-section-scroller" id="story">
-        <div class="bg-image">
-            <video src="./img/components/video-2.mp4?v=1" playsinline loop muted autoplay></video>
-        </div>
-
-        <div class="screen js-screen">
-            <div class="basic-text-block">
-                <div class="animation-block-wrapper">
-                    <h2 class="title _anim-fade-in-up">“We build bikes that we want to ride ourselves.”</h2>
-                </div>
-                <div class="animation-block-wrapper">
-                    <div class="text _anim-fade-in-up">
-                        <p>
-                            This Berlin-based brand began in 2012 with Max von Senger, a product design student and bike
-                            messenger passionate about cycling's balance between effort and exhilaration. Inspired by
-                            the
-                            aesthetics of bicycles and elements of culture, fashion, and streetwear, Max built his first
-                            bike while at Universität der Künste.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="screen justify-start js-screen">
-            <div class="floating-image">
-                <img src="./img/components/logo.svg" alt="">
-            </div>
-            <div class="basic-text-block">
-                <div class="animation-block-wrapper">
-                    <div class="text center _anim-fade-in-up">
-                        <p>
-                            Deciding on a name for the brand came from common slang within Max’s circle of friends.
-                            “‘Standert’ was something we said all the time, for everything,” he explains. “We used it as
-                            a way to say ‘of course’ or ‘why even ask?’ Especially with that pronunciation of ‘-ert’ at
-                            the end.”
-                        </p>
-                        <p>
-                            On 21 July 2012, Standert opened its doors onto Invalidenstr., the Mitte location that
-                            served as both retail space and company headquarters for the next seven years. “Early on, it
-                            was all about the café,” Max recalls. “Cycle cafés were a new concept, and we wanted to
-                            create a space for people to hang out.”
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="screen justify-start js-screen">
-            <div class="floating-image hidden">
-                <img src="./img/components/logo.svg" alt="">
-            </div>
-            <div class="basic-text-block">
-                <div class="animation-block-wrapper">
-                    <div class="text center _anim-fade-in-up">
-                        <p>
-                            By 2019, Standert was bursting at the seams. Still run by a small team, many of whom had
-                            been there since the beginning—and still in the original space on Invalidenstr. —Standert’s
-                            brand recognition and its bicycles had outpaced the growth and maturity of the company
-                            behind it. A decision had to be made.
-                        </p>
-                        <p>
-                            Soon after, Standert moved headquarters from the café’s crampedbasement to a newly erected
-                            building on Friedrichstr., with aspacious ground-floor showroom that reflected the ambitions
-                            of theup-and-coming brand. The Standert Cycling Hub currently functionsas a meeting point
-                            for the weekly Feierabendrunde rides, as well asthe sole location where one can see the full
-                            collection of Standertmodels in person.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="screen js-screen">
-            <div class="basic-text-block">
-                <div class="image _anim-fade-in">
-                    <img src="./img/components/cat-img.png" alt="">
-                </div>
-                <div class="animation-block-wrapper">
-                    <div class="text center _anim-fade-in-up">
-                        <p>
-                            A decade of organic growth and community building proved to be a winning combination for
-                            this now globally recognized bike brand. As Standert embarks on yet another new chapter in
-                            the company’s history, Max and Anna von Senger look to the future with confidence.“Let’s
-                            make the bike community a friendly and welcoming one,” they request, “In the spirit of what
-                            we think is the way forward for cycling.”
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-<div class="test-block">
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
 
-<script src="./js/components.js?v=001"></script>
+    <script src="./js/components-copy.js?v=001"></script>
 </body>
+
 </html>

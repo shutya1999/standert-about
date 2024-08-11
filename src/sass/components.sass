@@ -83,9 +83,21 @@ input, button, textarea, select
   height: 100vh
   height: calc(var(--vh, 1vh) * 100)
 
-
 .animation-block-wrapper
   overflow: hidden
+  & .text-wrap
+    overflow: hidden
+    & p, & span
+      display: block
+
+    @for $i from 1 through 10
+      &:nth-child(#{$i})
+        & p, & span
+          transition-delay: #{$i * 150}ms
+
+
+
+
 // Animation fade in up
 ._anim-fade-in-up
   transform: translateY(70%) translateZ(0)
@@ -95,6 +107,14 @@ input, button, textarea, select
 ._anim-fade-in-up.start-animation, .start-animation ._anim-fade-in-up
   opacity: 1
   transform: translateY(0px)
+
+// Animation clip path
+._anim-clip-path
+  clip-path: inset(0 0 100% 0)
+  transition: clip-path 0.5s cubic-bezier(.76, 0, .24, 1)
+
+._anim-clip-path.start-animation, .start-animation ._anim-clip-path
+  clip-path: inset(0 0 0 0)
 
 // Animation fade in
 ._anim-fade-in
@@ -108,20 +128,39 @@ input, button, textarea, select
 .custom-scrollbar
   @include scrollbar-styling
 
-.scroll-bar
-  z-index: 99999
+//.scroll-bar
+//  z-index: 99999
+//  position: fixed
+//  width: 3px
+//  height: 100%
+//  background: rgba(0, 0, 0, 0)
+//  top: 0
+//  left: 0
+//  margin: auto
+//  transition: opacity 0.3s
+//  & .scroll-bar__thumb
+//    width: 100%
+//    height: var(--thumb-height, 100px)
+//    background: #D9D9D9
+
+progress
   position: fixed
-  width: 3px
-  height: 100%
-  background: rgba(0, 0, 0, 0)
+  -webkit-appearance: none
+  appearance: none
+  border: none
+  background: transparent
+  z-index: 9999
   top: 0
-  left: 0
-  margin: auto
-  transition: opacity 0.3s
-  & .scroll-bar__thumb
-    width: 100%
-    height: var(--thumb-height, 100px)
-    background: #D9D9D9
+  left: 3px
+  width: 3px
+  width: 100vh
+  transform: rotate(90deg)
+  transform-origin: top left
+progress::-webkit-progress-bar
+  background: transparent
+progress::-webkit-progress-value
+  background: #D9D9D9
+  background-attachment: fixed
 
 
 
@@ -151,8 +190,8 @@ input, button, textarea, select
 
 
 .section-scroller
-  display: flex
-  flex-wrap: nowrap
+  // display: flex
+  // flex-wrap: nowrap
   height: 100%
   position: relative
   & .bg-image
@@ -170,22 +209,42 @@ input, button, textarea, select
       object-fit: cover
 
   & .screen
-    height: 100%
-    min-width: calc(var(--vw, 1vw) * 100)
-    display: flex
+    display: inline-block
     flex-direction: column
     align-items: center
     justify-content: center
     position: relative
-    //border: 1px solid white
-    //border-right-width: 0.5px
-    //border-left-width: 0.5px
+    float: left
+    height: calc(var(--vh, 1vh) * 100)
+
+    width: 100vw
+    //border: 1px solid red
+    & .screen-wrapper
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      position: relative
+      height: 100%
+      pointer-events: none
+      opacity: 0
+      transition: opacity 0.3s
+    &.start-animation
+      & .screen-wrapper
+        pointer-events: auto
+        opacity: 1
+
     &.align-start
       align-items: flex-start
     &.justify-start
       justify-content: flex-start
 
 
+.section-wrapper
+  position: relative
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+  width: calc( 100vw * var(--length))
 
 
 .basic-text-block
@@ -209,11 +268,11 @@ input, button, textarea, select
     &.center
       margin: 0 auto
     & p
-      margin: 24px 0
-      &:last-child
-        margin-bottom: 0
-      &:first-child
-        margin-top: 0
+      margin-bottom: 24px
+      //&:last-child
+      //  margin-bottom: 0
+      //&:first-child
+      //  margin-top: 0
 
   & .image
     margin: 0 auto 70px auto
@@ -229,6 +288,7 @@ input, button, textarea, select
   margin: 0 auto
   position: relative
   z-index: 2
+  transition-duration: 1s
   &:before
     content: ""
     display: block
@@ -324,10 +384,14 @@ input, button, textarea, select
 
 .floating-image
   width: 100%
-  transform: translateX(100%)
+  transform: translateX(-50%)
   margin: 40px 0 80px 0
+  //opacity: 0
+  //transition: all .3s
   &.hidden
     visibility: hidden
+  &.active-image
+    opacity: 1
   & img
     width: 100%
     height: auto
@@ -344,7 +408,45 @@ input, button, textarea, select
   opacity: 0
 
 
-//.story
+.block-with-images
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 0 130px
+  & .title
+    font-family: 'EurostileExtended', sans-serif
+    font-size: 50px
+    font-weight: 700
+    line-height: 55px
+    max-width: 750px
+    transition: all 1s .2s
+  & .images
+    position: relative
+    width: 500px
+    height: 500px
+    & .img
+      width: 100%
+      height: 100%
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      & picture
+        width: 100%
+        height: 100%
+      & img
+        width: 100%
+        transition-duration: 900ms
+      &:nth-child(2)
+        width: 90%
+        & img
+          transition-delay: 700ms
+      &:nth-child(3)
+        width: 85%
+        & img
+          transition-delay: 1400ms
+
+
 
 
 @media (max-width: 768px)
