@@ -31,6 +31,15 @@ window.addEventListener('load', () => {
     gsap.registerPlugin(ScrollTrigger);
 
 
+    // Observer.create({
+    //     type: "wheel,touch,pointer",
+    //     wheelSpeed: -1,
+    //     onDown: () => console.log('onDown'),
+    //     onUp: () => console.log('onUp'),
+    //     tolerance: 10,
+    //     preventDefault: true
+    // });
+
     let sectionsScroller = document.querySelectorAll(".js-section-scroller");
 
     if (sectionsScroller.length) {
@@ -43,10 +52,12 @@ window.addEventListener('load', () => {
                 end: () => {
                     let previousSectionScroll = 0;
 
-                    if (sectionsScroller[index - 1]){
+                    if (sectionsScroller[index - 1]) {
                         previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
+                        console.log(previousSectionScroll);
                     }
 
+                    //return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
                     return sectionScroller.scrollWidth + previousSectionScroll
 
                 },
@@ -57,12 +68,14 @@ window.addEventListener('load', () => {
                 // markers: true
             })
 
+            let scrollTweens = [];
 
             thumbNails.forEach((thumb, i) => {
                 let scrollTween = gsap.to(thumb, {
                     x: () => {
                         return - (i * window.innerWidth)
                     },
+                    //xPercent: -100,
                     ease: "none",
                     scrollTrigger: {
                         trigger: thumb.closest(".section-wrapper"),
@@ -71,10 +84,13 @@ window.addEventListener('load', () => {
                         invalidateOnRefresh: true,
                         //end: () => "+=" + (i * window.innerWidth),
                         end: () => {
-                            return "+=" + (i * window.innerWidth)
+                            //return "+=" + ((i * (window.innerWidth * 0.5)))
+                            return "+=" + i * (window.innerWidth)
                         },
                     }
                 });
+                scrollTweens.push(scrollTween);
+
 
                 ScrollTrigger.create({
                     trigger: thumb,
@@ -85,28 +101,23 @@ window.addEventListener('load', () => {
                     onEnter: (e) => {
                         const trigger = e.trigger;
                         const screens = trigger.closest('.js-section-scroller').querySelectorAll('.js-screen');
-                        if (screens.length > 0){
+                        if (screens.length > 0) {
                             removeClass(screens, 'start-animation');
                             //removeClass(document.querySelectorAll('.floating-image'), 'active-image');
                         }
                         setTimeout(() => {
                             trigger.classList.add('start-animation');
                         }, 200)
-
-                        // if (trigger.querySelector('.floating-image') && trigger.querySelector('.floating-image').dataset.id){
-                        //     document.getElementById(trigger.querySelector('.floating-image').dataset.id).classList.add('active-image')
-                        // }
-
                     },
                     onLeave: (e) => {
-                        console.log(e.trigger, 'onLeave')
+                        //console.log(e.trigger, 'onLeave')
                     },
                     onEnterBack: (e) => {
                         const trigger = e.trigger;
                         const screens = trigger.closest('.js-section-scroller').querySelectorAll('.js-screen');
 
-                        if (trigger.previousElementSibling){
-                            if (screens.length > 0){
+                        if (trigger.previousElementSibling) {
+                            if (screens.length > 0) {
                                 removeClass(screens, 'start-animation');
                             }
                             setTimeout(() => {
@@ -115,10 +126,13 @@ window.addEventListener('load', () => {
                         }
                     },
                     onLeaveBack: (e) => {
-                        console.log(e.trigger, 'onLeaveBack')
+                        // console.log(e.trigger, 'onLeaveBack')
                     },
                     //markers: true
                 })
+
+
+
 
                 // floating image animation
                 // if (sectionScroller.querySelector('.floating-image:not(.hidden)')) {
@@ -142,7 +156,57 @@ window.addEventListener('load', () => {
                 //     })
                 // }
             });
+
+
+            
+        
+            thumbNails.forEach((thumb, i) => {
+                if (thumb.querySelector('._js-image_clippath img')) {
+                    const imagesClipPath = thumb.querySelectorAll('._js-image_clippath img');
+                    const nextScreen = thumb.nextElementSibling;
+
+                    if (nextScreen && imagesClipPath.length > 0) {
+                        
+                        imagesClipPath.forEach((img, imgIndex) => {
+
+                            let start = 100 - ((imgIndex * 100) / imagesClipPath.length);
+                            let end = (100 - (( 100 / imagesClipPath.length) * (imgIndex + 1)));
+                            
+                            if (imgIndex === imagesClipPath.length - 1){
+                                let end = 2;
+                            }
+                            
+                            gsap.to(img, {
+                                //y: -120,
+                                //opacity: 0,
+                                //webkitClipPath: 'inset(0 0 0 0)',
+                                //clipPath: 'inset(0 0 0 0)',
+                                "--clip": '100%',
+                                ease: "none",
+                                scrollTrigger: {
+                                    trigger: nextScreen,
+                                    containerAnimation: scrollTweens[i + 1],
+                                    start: `start ${start}%`,
+                                    end: `end ${end}%`,
+                                    scrub: true,
+                                    //markers: true
+                                    //id: "2"
+                                }
+                            });  
+                        })
+                                          
+                    }
+
+                }
+            })
+
+
+
+
         })
+
+
+
     }
 
     // Video play/pause controls

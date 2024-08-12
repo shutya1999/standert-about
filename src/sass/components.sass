@@ -218,7 +218,7 @@ progress::-webkit-progress-value
     height: calc(var(--vh, 1vh) * 100)
 
     width: 100vw
-    //border: 1px solid red
+    // border: 1px solid red
     & .screen-wrapper
       display: flex
       flex-direction: column
@@ -435,16 +435,19 @@ progress::-webkit-progress-value
         width: 100%
         height: 100%
       & img
+        //--clip-path: 100%
         width: 100%
-        transition-duration: 900ms
+        clip-path: inset(0 0 calc((100% - var(--clip)) ) 0)
+        //transition: clip-path 900ms cubic-bezier(.76, 0, .24, 1)
+        // transition-duration: 900ms
       &:nth-child(2)
         width: 90%
         & img
-          transition-delay: 700ms
+          //transition-delay: 700ms
       &:nth-child(3)
         width: 85%
         & img
-          transition-delay: 1400ms
+          //transition-delay: 1400ms
 
 
 

@@ -27,6 +27,16 @@ function addClass(nodes, className) {
 }
 window.addEventListener('load', function () {
   gsap.registerPlugin(ScrollTrigger);
+
+  // Observer.create({
+  //     type: "wheel,touch,pointer",
+  //     wheelSpeed: -1,
+  //     onDown: () => console.log('onDown'),
+  //     onUp: () => console.log('onUp'),
+  //     tolerance: 10,
+  //     preventDefault: true
+  // });
+
   var sectionsScroller = document.querySelectorAll(".js-section-scroller");
   if (sectionsScroller.length) {
     sectionsScroller.forEach(function (sectionScroller, index) {
@@ -38,7 +48,10 @@ window.addEventListener('load', function () {
           var previousSectionScroll = 0;
           if (sectionsScroller[index - 1]) {
             previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
+            console.log(previousSectionScroll);
           }
+
+          //return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
           return sectionScroller.scrollWidth + previousSectionScroll;
         },
         pin: true,
@@ -47,11 +60,13 @@ window.addEventListener('load', function () {
         invalidateOnRefresh: true
         // markers: true
       });
+      var scrollTweens = [];
       thumbNails.forEach(function (thumb, i) {
         var scrollTween = gsap.to(thumb, {
           x: function x() {
             return -(i * window.innerWidth);
           },
+          //xPercent: -100,
           ease: "none",
           scrollTrigger: {
             trigger: thumb.closest(".section-wrapper"),
@@ -60,10 +75,12 @@ window.addEventListener('load', function () {
             invalidateOnRefresh: true,
             //end: () => "+=" + (i * window.innerWidth),
             end: function end() {
+              //return "+=" + ((i * (window.innerWidth * 0.5)))
               return "+=" + i * window.innerWidth;
             }
           }
         });
+        scrollTweens.push(scrollTween);
         ScrollTrigger.create({
           trigger: thumb,
           // containerAnimation: scrollTween,
@@ -80,13 +97,9 @@ window.addEventListener('load', function () {
             setTimeout(function () {
               trigger.classList.add('start-animation');
             }, 200);
-
-            // if (trigger.querySelector('.floating-image') && trigger.querySelector('.floating-image').dataset.id){
-            //     document.getElementById(trigger.querySelector('.floating-image').dataset.id).classList.add('active-image')
-            // }
           },
           onLeave: function onLeave(e) {
-            console.log(e.trigger, 'onLeave');
+            //console.log(e.trigger, 'onLeave')
           },
           onEnterBack: function onEnterBack(e) {
             var trigger = e.trigger;
@@ -101,7 +114,7 @@ window.addEventListener('load', function () {
             }
           },
           onLeaveBack: function onLeaveBack(e) {
-            console.log(e.trigger, 'onLeaveBack');
+            // console.log(e.trigger, 'onLeaveBack')
           }
           //markers: true
         });
@@ -127,6 +140,38 @@ window.addEventListener('load', function () {
         //         });
         //     })
         // }
+      });
+      thumbNails.forEach(function (thumb, i) {
+        if (thumb.querySelector('._js-image_clippath img')) {
+          var imagesClipPath = thumb.querySelectorAll('._js-image_clippath img');
+          var nextScreen = thumb.nextElementSibling;
+          if (nextScreen && imagesClipPath.length > 0) {
+            imagesClipPath.forEach(function (img, imgIndex) {
+              var start = 100 - imgIndex * 100 / imagesClipPath.length;
+              var end = 100 - 100 / imagesClipPath.length * (imgIndex + 1);
+              if (imgIndex === imagesClipPath.length - 1) {
+                var _end = 2;
+              }
+              gsap.to(img, {
+                //y: -120,
+                //opacity: 0,
+                //webkitClipPath: 'inset(0 0 0 0)',
+                //clipPath: 'inset(0 0 0 0)',
+                "--clip": '100%',
+                ease: "none",
+                scrollTrigger: {
+                  trigger: nextScreen,
+                  containerAnimation: scrollTweens[i + 1],
+                  start: "start ".concat(start, "%"),
+                  end: "end ".concat(end, "%"),
+                  scrub: true
+                  //markers: true
+                  //id: "2"
+                }
+              });
+            });
+          }
+        }
       });
     });
   }
