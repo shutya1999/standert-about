@@ -48,7 +48,7 @@ window.addEventListener('load', function () {
           var previousSectionScroll = 0;
           if (sectionsScroller[index - 1]) {
             previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
-            console.log(previousSectionScroll);
+            // console.log(previousSectionScroll);
           }
 
           //return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
@@ -97,6 +97,11 @@ window.addEventListener('load', function () {
             setTimeout(function () {
               trigger.classList.add('start-animation');
             }, 200);
+            //console.log(e.trigger, 'onLeave')
+
+            if (screens[i - 2] && screens[i - 2].querySelector('.floating-image')) {
+              screens[i - 2].querySelector('.floating-image').classList.add('anim-hide');
+            }
           },
           onLeave: function onLeave(e) {
             //console.log(e.trigger, 'onLeave')
@@ -112,9 +117,13 @@ window.addEventListener('load', function () {
                 trigger.previousElementSibling.classList.add('start-animation');
               }, 200);
             }
+            console.log(e.trigger, 'onEnterBack');
+            if (screens[i - 2] && screens[i - 2].querySelector('.floating-image')) {
+              screens[i - 2].querySelector('.floating-image').classList.remove('anim-hide');
+            }
           },
           onLeaveBack: function onLeaveBack(e) {
-            // console.log(e.trigger, 'onLeaveBack')
+            //console.log(e.trigger, 'onLeaveBack')
           }
           //markers: true
         });
@@ -150,7 +159,7 @@ window.addEventListener('load', function () {
               var start = 100 - imgIndex * 100 / imagesClipPath.length;
               var end = 100 - 100 / imagesClipPath.length * (imgIndex + 1);
               if (imgIndex === imagesClipPath.length - 1) {
-                var _end = 2;
+                end = 10;
               }
               gsap.to(img, {
                 //y: -120,
@@ -165,10 +174,42 @@ window.addEventListener('load', function () {
                   start: "start ".concat(start, "%"),
                   end: "end ".concat(end, "%"),
                   scrub: true
-                  //markers: true
+                  // markers: true
                   //id: "2"
                 }
               });
+            });
+          }
+        }
+        if (thumb.querySelector('.floating-image')) {
+          var floatingImage = thumb.querySelector('.floating-image:not(.hidden)');
+          var _nextScreen = thumb.nextElementSibling;
+          if (_nextScreen && floatingImage) {
+            //console.log(nextScreen, floatingImage);
+
+            gsap.to(floatingImage, {
+              //y: -120,
+              //opacity: 0,
+              //webkitClipPath: 'inset(0 0 0 0)',
+              //clipPath: 'inset(0 0 0 0)',
+              //"--clip": '100%',
+              x: "-50%",
+              ease: "none",
+              scrollTrigger: {
+                trigger: _nextScreen,
+                containerAnimation: scrollTweens[i + 1],
+                start: "start 100%",
+                end: "end 0",
+                scrub: true,
+                //markers: true,
+                //id: "2",
+                onEnter: function onEnter(e) {
+                  //console.log('onenter');
+                },
+                onLeave: function onLeave(e) {
+                  //console.log('onLeave');
+                }
+              }
             });
           }
         }

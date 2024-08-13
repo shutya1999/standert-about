@@ -190,8 +190,6 @@ progress::-webkit-progress-value
 
 
 .section-scroller
-  // display: flex
-  // flex-wrap: nowrap
   height: 100%
   position: relative
   & .bg-image
@@ -210,20 +208,12 @@ progress::-webkit-progress-value
 
   & .screen
     display: inline-block
-    flex-direction: column
-    align-items: center
-    justify-content: center
     position: relative
     float: left
     height: calc(var(--vh, 1vh) * 100)
-
     width: 100vw
     // border: 1px solid red
     & .screen-wrapper
-      display: flex
-      flex-direction: column
-      align-items: center
-      justify-content: center
       position: relative
       height: 100%
       pointer-events: none
@@ -234,11 +224,18 @@ progress::-webkit-progress-value
         pointer-events: auto
         opacity: 1
 
-    &.align-start
-      align-items: flex-start
-    &.justify-start
-      justify-content: flex-start
 
+
+.screen-wrapper
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+.align-start
+  align-items: flex-start
+.justify-start
+  justify-content: flex-start
 
 .section-wrapper
   position: relative
@@ -384,12 +381,14 @@ progress::-webkit-progress-value
 
 .floating-image
   width: 100%
-  transform: translateX(-50%)
+  transform: translateX(100%)
   margin: 40px 0 80px 0
   //opacity: 0
-  //transition: all .3s
+  transition: opacity .3s
   &.hidden
     visibility: hidden
+  &.anim-hide
+    opacity: 0
   &.active-image
     opacity: 1
   & img
