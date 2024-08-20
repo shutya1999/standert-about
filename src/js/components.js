@@ -30,17 +30,8 @@ function addClass(nodes, className) {
 window.addEventListener('load', () => {
     gsap.registerPlugin(ScrollTrigger);
 
-
-    // Observer.create({
-    //     type: "wheel,touch,pointer",
-    //     wheelSpeed: -1,
-    //     onDown: () => console.log('onDown'),
-    //     onUp: () => console.log('onUp'),
-    //     tolerance: 10,
-    //     preventDefault: true
-    // });
-
-    let sectionsScroller = document.querySelectorAll(".js-section-scroller");
+    let sectionsScroller = document.querySelectorAll(".js-section-scroller"),
+        TveenSectionInMenu = {};
 
     if (sectionsScroller.length) {
         sectionsScroller.forEach((sectionScroller, index) => {
@@ -54,11 +45,10 @@ window.addEventListener('load', () => {
 
                     if (sectionsScroller[index - 1]) {
                         previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
-                        // console.log(previousSectionScroll);
                     }
 
-                    //return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
-                    return sectionScroller.scrollWidth + previousSectionScroll
+                    return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
+                    //return sectionScroller.scrollWidth + previousSectionScroll
 
                 },
                 pin: true,
@@ -84,13 +74,12 @@ window.addEventListener('load', () => {
                         invalidateOnRefresh: true,
                         //end: () => "+=" + (i * window.innerWidth),
                         end: () => {
-                            //return "+=" + ((i * (window.innerWidth * 0.5)))
-                            return "+=" + i * (window.innerWidth)
+                            return "+=" + ((i * (window.innerWidth * 0.5)))
+                            //return "+=" + i * (window.innerWidth)
                         },
                     }
                 });
                 scrollTweens.push(scrollTween);
-
 
                 ScrollTrigger.create({
                     trigger: thumb,
@@ -110,10 +99,10 @@ window.addEventListener('load', () => {
                         }, 200)
                         //console.log(e.trigger, 'onLeave')
 
-                        if(screens[i - 2] && screens[i - 2].querySelector('.floating-image')){
+                        if (screens[i - 2] && screens[i - 2].querySelector('.floating-image')) {
                             screens[i - 2].querySelector('.floating-image').classList.add('anim-hide')
                         }
-                        
+
                     },
                     onLeave: (e) => {
                         //console.log(e.trigger, 'onLeave')
@@ -131,9 +120,9 @@ window.addEventListener('load', () => {
                             }, 200)
                         }
 
-                        console.log(e.trigger, 'onEnterBack')
+                        // console.log(e.trigger, 'onEnterBack')
 
-                        if(screens[i - 2] && screens[i - 2].querySelector('.floating-image')){
+                        if (screens[i - 2] && screens[i - 2].querySelector('.floating-image')) {
                             screens[i - 2].querySelector('.floating-image').classList.remove('anim-hide')
                         }
                     },
@@ -144,55 +133,35 @@ window.addEventListener('load', () => {
                 })
 
 
+                if (thumb.id) {
 
+                    if (document.querySelector(`.navigation-block [href="#${thumb.id}"]`)) {
+                        TveenSectionInMenu[thumb.id] = scrollTween;
+                    }
+                }
 
-                // floating image animation
-                // if (sectionScroller.querySelector('.floating-image:not(.hidden)')) {
-                //     const floatingImages = sectionScroller.querySelectorAll('.floating-image');
-                //
-                //     floatingImages.forEach(image => {
-                //         gsap.to(image, {
-                //             x: "-100%",
-                //             // xPercent: -100,
-                //             // opacity: 0,
-                //             ease: "none",
-                //             scrollTrigger: {
-                //                 trigger: image,
-                //                 containerAnimation: scrollTween,
-                //                 // start: "-100% 100%",
-                //                 // end: "50% 50%",
-                //                 scrub: true,
-                //                 markers: true
-                //             }
-                //         });
-                //     })
-                // }
             });
 
 
-            
-        
+
+
             thumbNails.forEach((thumb, i) => {
                 if (thumb.querySelector('._js-image_clippath img')) {
                     const imagesClipPath = thumb.querySelectorAll('._js-image_clippath img');
                     const nextScreen = thumb.nextElementSibling;
 
                     if (nextScreen && imagesClipPath.length > 0) {
-                        
+
                         imagesClipPath.forEach((img, imgIndex) => {
 
                             let start = 100 - ((imgIndex * 100) / imagesClipPath.length);
-                            let end = (100 - (( 100 / imagesClipPath.length) * (imgIndex + 1)));
+                            let end = (100 - ((100 / imagesClipPath.length) * (imgIndex + 1)));
 
-                            if (imgIndex === imagesClipPath.length - 1){
+                            if (imgIndex === imagesClipPath.length - 1) {
                                 end = 10;
                             }
-                            
+
                             gsap.to(img, {
-                                //y: -120,
-                                //opacity: 0,
-                                //webkitClipPath: 'inset(0 0 0 0)',
-                                //clipPath: 'inset(0 0 0 0)',
                                 "--clip": '100%',
                                 ease: "none",
                                 scrollTrigger: {
@@ -201,58 +170,73 @@ window.addEventListener('load', () => {
                                     start: `start ${start}%`,
                                     end: `end ${end}%`,
                                     scrub: true,
+                                    onEnter: (e) => {
+                                        img.classList.add('active');
+                                    },
+                                    onEnterBack: (e) => {
+                                        img.classList.remove('active');
+                                    },
                                     // markers: true
-                                    //id: "2"
                                 }
-                            });  
+                            });
                         })
-                                          
+
                     }
                 }
 
-                if(thumb.querySelector('.floating-image')){
-                    const floatingImage = thumb.querySelector('.floating-image:not(.hidden)');
-                    const nextScreen = thumb.nextElementSibling;
+                // 2 text block in one section
+                if (thumb.querySelector('.split-text-blocks')) {
+                    const floatingImage = thumb.querySelector('.floating-image:not(.hidden)'),
+                        nextScreen = thumb.nextElementSibling,
+                        textBlocks = thumb.querySelectorAll('.basic-text-block');
 
-                    if (nextScreen && floatingImage) {
-                        //console.log(nextScreen, floatingImage);
 
-                        gsap.to(floatingImage, {
-                            //y: -120,
-                            //opacity: 0,
-                            //webkitClipPath: 'inset(0 0 0 0)',
-                            //clipPath: 'inset(0 0 0 0)',
-                            //"--clip": '100%',
-                            x: "-50%",
-                            ease: "none",
-                            scrollTrigger: {
-                                trigger: nextScreen,
-                                containerAnimation: scrollTweens[i + 1],
-                                start: `start 100%`,
-                                end: `end 0`,
-                                scrub: true,
-                                //markers: true,
-                                //id: "2",
-                                onEnter: (e) => {
-                                    //console.log('onenter');
-                                },
-                                onLeave: (e) => {
-                                    //console.log('onLeave');
-                                },
+                    gsap.to(nextScreen, {
+                        //x: "-50%",
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: nextScreen,
+                            containerAnimation: scrollTweens[i + 1],
+                            start: `start 90%`,
+                            end: `start 50%`,
+                            scrub: true,
+                            // markers: true,
+                            onEnter: (e) => {
+                                textBlocks[0].classList.add('active');
+                                textBlocks[1].classList.remove('active');
+                            },
+                            onLeave: (e) => {
+                                textBlocks[0].classList.remove('active');
+                                textBlocks[1].classList.add('active');
+                            },
+                            onEnterBack: (e) => {
+                                textBlocks[0].classList.add('active');
+                                textBlocks[1].classList.remove('active');
+                            },
+                            onLeaveBack: (e) => {
+                                textBlocks[0].classList.remove('active');
+                                textBlocks[1].classList.remove('active');
                             }
-                        });  
-                        
-                    }
+
+                        }
+                    })
+
+                    // Scroll effect for image
+                    gsap.to(floatingImage, {
+                        x: "-50%",
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: nextScreen,
+                            containerAnimation: scrollTweens[i + 1],
+                            start: `start 100%`,
+                            end: `end 0`,
+                            scrub: true,
+                            // markers: true,
+                        }
+                    })
                 }
             })
-
-
-
-
         })
-
-
-
     }
 
     // Video play/pause controls
@@ -354,11 +338,37 @@ window.addEventListener('load', () => {
         menuElements.forEach(menuItem => {
             menuItem.addEventListener('click', (e) => {
                 e.preventDefault();
-                const id = menuItem.getAttribute('href');
-                document.querySelector(id).scrollIntoView({
-                    behavior: "smooth",
-                });
+                const id = menuItem.getAttribute('href'),
+                    section = document.querySelector(id);
+
+                if (section) {                
+                    let scrollTo = 0;
+
+                    let index = Array.prototype.indexOf.call(sectionsScroller, section);
+                    if (index > 0) {
+                        Array.prototype.slice.call(sectionsScroller, 0, index).forEach(elem => {
+                            console.log(elem);
+                            scrollTo += elem.querySelectorAll('.js-screen').length * (window.innerWidth * 0.5);
+                        })
+                        
+                        scrollTo += window.innerHeight
+                    } 
+
+                    window.scrollTo({
+                        top: scrollTo,
+                        behavior: "smooth",
+                    });   
+                }
             })
         })
     }
+})
+
+
+window.addEventListener('scroll', (e) => {
+    let posTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+
+
+    console.log(posTop);
+    
 })

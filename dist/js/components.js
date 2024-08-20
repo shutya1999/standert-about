@@ -27,17 +27,8 @@ function addClass(nodes, className) {
 }
 window.addEventListener('load', function () {
   gsap.registerPlugin(ScrollTrigger);
-
-  // Observer.create({
-  //     type: "wheel,touch,pointer",
-  //     wheelSpeed: -1,
-  //     onDown: () => console.log('onDown'),
-  //     onUp: () => console.log('onUp'),
-  //     tolerance: 10,
-  //     preventDefault: true
-  // });
-
-  var sectionsScroller = document.querySelectorAll(".js-section-scroller");
+  var sectionsScroller = document.querySelectorAll(".js-section-scroller"),
+    TveenSectionInMenu = {};
   if (sectionsScroller.length) {
     sectionsScroller.forEach(function (sectionScroller, index) {
       var thumbNails = gsap.utils.toArray(sectionScroller.querySelectorAll(".js-screen"));
@@ -48,11 +39,9 @@ window.addEventListener('load', function () {
           var previousSectionScroll = 0;
           if (sectionsScroller[index - 1]) {
             previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
-            // console.log(previousSectionScroll);
           }
-
-          //return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
-          return sectionScroller.scrollWidth + previousSectionScroll;
+          return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5;
+          //return sectionScroller.scrollWidth + previousSectionScroll
         },
         pin: true,
         anticipatePin: 1,
@@ -75,8 +64,8 @@ window.addEventListener('load', function () {
             invalidateOnRefresh: true,
             //end: () => "+=" + (i * window.innerWidth),
             end: function end() {
-              //return "+=" + ((i * (window.innerWidth * 0.5)))
-              return "+=" + i * window.innerWidth;
+              return "+=" + i * (window.innerWidth * 0.5);
+              //return "+=" + i * (window.innerWidth)
             }
           }
         });
@@ -117,7 +106,9 @@ window.addEventListener('load', function () {
                 trigger.previousElementSibling.classList.add('start-animation');
               }, 200);
             }
-            console.log(e.trigger, 'onEnterBack');
+
+            // console.log(e.trigger, 'onEnterBack')
+
             if (screens[i - 2] && screens[i - 2].querySelector('.floating-image')) {
               screens[i - 2].querySelector('.floating-image').classList.remove('anim-hide');
             }
@@ -127,28 +118,11 @@ window.addEventListener('load', function () {
           }
           //markers: true
         });
-
-        // floating image animation
-        // if (sectionScroller.querySelector('.floating-image:not(.hidden)')) {
-        //     const floatingImages = sectionScroller.querySelectorAll('.floating-image');
-        //
-        //     floatingImages.forEach(image => {
-        //         gsap.to(image, {
-        //             x: "-100%",
-        //             // xPercent: -100,
-        //             // opacity: 0,
-        //             ease: "none",
-        //             scrollTrigger: {
-        //                 trigger: image,
-        //                 containerAnimation: scrollTween,
-        //                 // start: "-100% 100%",
-        //                 // end: "50% 50%",
-        //                 scrub: true,
-        //                 markers: true
-        //             }
-        //         });
-        //     })
-        // }
+        if (thumb.id) {
+          if (document.querySelector(".navigation-block [href=\"#".concat(thumb.id, "\"]"))) {
+            TveenSectionInMenu[thumb.id] = scrollTween;
+          }
+        }
       });
       thumbNails.forEach(function (thumb, i) {
         if (thumb.querySelector('._js-image_clippath img')) {
@@ -162,10 +136,6 @@ window.addEventListener('load', function () {
                 end = 10;
               }
               gsap.to(img, {
-                //y: -120,
-                //opacity: 0,
-                //webkitClipPath: 'inset(0 0 0 0)',
-                //clipPath: 'inset(0 0 0 0)',
                 "--clip": '100%',
                 ease: "none",
                 scrollTrigger: {
@@ -173,45 +143,67 @@ window.addEventListener('load', function () {
                   containerAnimation: scrollTweens[i + 1],
                   start: "start ".concat(start, "%"),
                   end: "end ".concat(end, "%"),
-                  scrub: true
+                  scrub: true,
+                  onEnter: function onEnter(e) {
+                    img.classList.add('active');
+                  },
+                  onEnterBack: function onEnterBack(e) {
+                    img.classList.remove('active');
+                  }
                   // markers: true
-                  //id: "2"
                 }
               });
             });
           }
         }
-        if (thumb.querySelector('.floating-image')) {
-          var floatingImage = thumb.querySelector('.floating-image:not(.hidden)');
-          var _nextScreen = thumb.nextElementSibling;
-          if (_nextScreen && floatingImage) {
-            //console.log(nextScreen, floatingImage);
 
-            gsap.to(floatingImage, {
-              //y: -120,
-              //opacity: 0,
-              //webkitClipPath: 'inset(0 0 0 0)',
-              //clipPath: 'inset(0 0 0 0)',
-              //"--clip": '100%',
-              x: "-50%",
-              ease: "none",
-              scrollTrigger: {
-                trigger: _nextScreen,
-                containerAnimation: scrollTweens[i + 1],
-                start: "start 100%",
-                end: "end 0",
-                scrub: true,
-                //markers: true,
-                //id: "2",
-                onEnter: function onEnter(e) {
-                  //console.log('onenter');
-                },
-                onLeave: function onLeave(e) {
-                  //console.log('onLeave');
-                }
+        // 2 text block in one section
+        if (thumb.querySelector('.split-text-blocks')) {
+          var floatingImage = thumb.querySelector('.floating-image:not(.hidden)'),
+            _nextScreen = thumb.nextElementSibling,
+            textBlocks = thumb.querySelectorAll('.basic-text-block');
+          gsap.to(_nextScreen, {
+            //x: "-50%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: _nextScreen,
+              containerAnimation: scrollTweens[i + 1],
+              start: "start 90%",
+              end: "start 50%",
+              scrub: true,
+              // markers: true,
+              onEnter: function onEnter(e) {
+                textBlocks[0].classList.add('active');
+                textBlocks[1].classList.remove('active');
+              },
+              onLeave: function onLeave(e) {
+                textBlocks[0].classList.remove('active');
+                textBlocks[1].classList.add('active');
+              },
+              onEnterBack: function onEnterBack(e) {
+                textBlocks[0].classList.add('active');
+                textBlocks[1].classList.remove('active');
+              },
+              onLeaveBack: function onLeaveBack(e) {
+                textBlocks[0].classList.remove('active');
+                textBlocks[1].classList.remove('active');
               }
-            });
-          }
+            }
+          });
+
+          // Scroll effect for image
+          gsap.to(floatingImage, {
+            x: "-50%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: _nextScreen,
+              containerAnimation: scrollTweens[i + 1],
+              start: "start 100%",
+              end: "end 0",
+              scrub: true
+              // markers: true,
+            }
+          });
         }
       });
     });
@@ -305,11 +297,28 @@ window.addEventListener('load', function () {
     menuElements.forEach(function (menuItem) {
       menuItem.addEventListener('click', function (e) {
         e.preventDefault();
-        var id = menuItem.getAttribute('href');
-        document.querySelector(id).scrollIntoView({
-          behavior: "smooth"
-        });
+        var id = menuItem.getAttribute('href'),
+          section = document.querySelector(id);
+        if (section) {
+          var scrollTo = 0;
+          var index = Array.prototype.indexOf.call(sectionsScroller, section);
+          if (index > 0) {
+            Array.prototype.slice.call(sectionsScroller, 0, index).forEach(function (elem) {
+              console.log(elem);
+              scrollTo += elem.querySelectorAll('.js-screen').length * (window.innerWidth * 0.5);
+            });
+            scrollTo += window.innerHeight;
+          }
+          window.scrollTo({
+            top: scrollTo,
+            behavior: "smooth"
+          });
+        }
       });
     });
   }
+});
+window.addEventListener('scroll', function (e) {
+  var posTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+  console.log(posTop);
 });

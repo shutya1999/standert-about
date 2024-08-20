@@ -381,7 +381,8 @@ progress::-webkit-progress-value
 
 .floating-image
   width: 100%
-  transform: translateX(100%)
+  // transform: translateX(100%)
+  transform: translateX(50%)
   margin: 40px 0 80px 0
   //opacity: 0
   transition: opacity .3s
@@ -434,11 +435,12 @@ progress::-webkit-progress-value
         width: 100%
         height: 100%
       & img
-        //--clip-path: 100%
         width: 100%
-        clip-path: inset(0 0 calc((100% - var(--clip)) ) 0)
-        //transition: clip-path 900ms cubic-bezier(.76, 0, .24, 1)
-        // transition-duration: 900ms
+        // clip-path: inset(0 0 calc((100% - var(--clip)) ) 0)
+        transition: clip-path 1s cubic-bezier(.76, 0, .24, 1)
+        clip-path: inset(0 0 100% 0)
+        &.active
+          clip-path: inset(0 0 0 0)
       &:nth-child(2)
         width: 90%
         & img
@@ -447,6 +449,42 @@ progress::-webkit-progress-value
         width: 85%
         & img
           //transition-delay: 1400ms
+
+
+
+// Animation fade in up
+// ._anim-fade-in-up
+//   transform: translateY(70%) translateZ(0)
+//   opacity: 0
+//   transition: all 0.8s ease
+
+// ._anim-fade-in-up.start-animation, .start-animation ._anim-fade-in-up
+//   opacity: 1
+//   transform: translateY(0px)
+
+  
+.split-text-blocks
+  position: relative
+  width: 100%
+  height: 100%
+  & .basic-text-block
+    position: absolute
+    position: absolute
+    left: 50%
+    top: 0
+    transform: translate(-50%, 0px)
+    & .text-wrap
+      & p
+        transform: translateY(70%) translateZ(0)
+        opacity: 0
+        transition: all 0.8s ease
+
+    &.active
+      opacity: 1
+      & .text-wrap
+        & p
+          opacity: 1
+          transform: translateY(0px)
 
 
 
