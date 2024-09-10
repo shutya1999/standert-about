@@ -381,10 +381,8 @@ progress::-webkit-progress-value
 
 .floating-image
   width: 100%
-  // transform: translateX(100%)
   transform: translateX(50%)
   margin: 40px 0 80px 0
-  //opacity: 0
   transition: opacity .3s
   &.hidden
     visibility: hidden
@@ -508,8 +506,13 @@ progress::-webkit-progress-value
     & .screen
       align-items: flex-start
       justify-content: flex-start
-      &.mob-justify-center
-        justify-content: center
+      // &.mob-justify-center
+        // justify-content: center
+
+  .screen-wrapper
+    &.mob-justify-start
+      justify-content: flex-start
+
 
   .basic-text-block
     max-width: 100%
@@ -521,6 +524,8 @@ progress::-webkit-progress-value
       max-width: 100%
     & .text
       max-width: 100%
+    &.mob-pt0
+      padding-top: 0
 
   .video-block
     max-width: calc(100% - rem(80))
@@ -528,12 +533,41 @@ progress::-webkit-progress-value
       border-radius: rem(25)
 
   .floating-image
-    position: relative
-    width: 200%
+    // position: relative
+    // width: 200%
     //height: rem(300)
-    margin: 0
-    transform: none!important
-    padding: 0 rem(40)
+    // margin: 0
+    // transform: none!important
+    // padding: 0 rem(40)
+
+  .floating-image
+    width: 400%
+    // transform: translateX(50%)
+    margin: rem(30) 0 rem(50) 0
+
+  .split-text-blocks
+    & .basic-text-block
+      padding-top: 0
+
+
+  .block-with-images
+    flex-direction: column
+    align-items: center
+    justify-content: flex-start
+    gap: 0 rem(20)
+    padding: rem(100) rem(40) 0 rem(40)
+    width: 100%
+    gap: rem(80) 0
+    & .title
+      font-size: rem(42)
+      line-height: rem(45)
+      margin-bottom: rem(50)
+      max-width: 100%
+      margin-bottom: 0
+    & .images
+      width: 80%
+      height: auto
+      aspect-ratio: 1/1
 
 
 

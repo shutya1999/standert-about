@@ -13,6 +13,7 @@ window.addEventListener('load', () => {
         document.documentElement.style.setProperty('--vw', `${vw}px`);
     });
 })
+let isPortrait = () => window.matchMedia('screen and (orientation: portrait)').matches;
 
 // Remove class
 function removeClass(nodes, className) {
@@ -41,14 +42,28 @@ window.addEventListener('load', () => {
                 trigger: sectionScroller,
                 start: `top top`,
                 end: () => {
+                    if (isPortrait()) {
+                        console.log((sectionScroller.querySelectorAll('.js-screen').length - 1) * window.innerHeight);
+
+                        let previousSectionScroll = 0;
+
+                        if (sectionsScroller[index - 1]) {
+                            previousSectionScroll = sectionsScroller[index - 1].querySelectorAll('.js-screen').length * window.innerHeight;
+                        }
+
+                        
+                        return ((sectionScroller.querySelectorAll('.js-screen').length - 1) * window.innerHeight) + previousSectionScroll; 
+                    }
+                
+
+
                     let previousSectionScroll = 0;
 
                     if (sectionsScroller[index - 1]) {
                         previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
                     }
-
+                    
                     return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
-                    //return sectionScroller.scrollWidth + previousSectionScroll
 
                 },
                 pin: true,
@@ -74,8 +89,10 @@ window.addEventListener('load', () => {
                         invalidateOnRefresh: true,
                         //end: () => "+=" + (i * window.innerWidth),
                         end: () => {
+                            if (isPortrait()) {
+                                return "+=" + ((i * (window.innerHeight)))    
+                            }
                             return "+=" + ((i * (window.innerWidth * 0.5)))
-                            //return "+=" + i * (window.innerWidth)
                         },
                     }
                 });
@@ -366,9 +383,6 @@ window.addEventListener('load', () => {
 
 
 window.addEventListener('scroll', (e) => {
-    let posTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-
-
-    console.log(posTop);
-    
+    let posTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;    
 })
+

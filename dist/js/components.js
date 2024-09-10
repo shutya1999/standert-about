@@ -13,6 +13,9 @@ window.addEventListener('load', function () {
     document.documentElement.style.setProperty('--vw', "".concat(vw, "px"));
   });
 });
+var isPortrait = function isPortrait() {
+  return window.matchMedia('screen and (orientation: portrait)').matches;
+};
 
 // Remove class
 function removeClass(nodes, className) {
@@ -36,12 +39,19 @@ window.addEventListener('load', function () {
         trigger: sectionScroller,
         start: "top top",
         end: function end() {
+          if (isPortrait()) {
+            console.log((sectionScroller.querySelectorAll('.js-screen').length - 1) * window.innerHeight);
+            var _previousSectionScroll = 0;
+            if (sectionsScroller[index - 1]) {
+              _previousSectionScroll = sectionsScroller[index - 1].querySelectorAll('.js-screen').length * window.innerHeight;
+            }
+            return (sectionScroller.querySelectorAll('.js-screen').length - 1) * window.innerHeight + _previousSectionScroll;
+          }
           var previousSectionScroll = 0;
           if (sectionsScroller[index - 1]) {
             previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
           }
           return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5;
-          //return sectionScroller.scrollWidth + previousSectionScroll
         },
         pin: true,
         anticipatePin: 1,
@@ -64,8 +74,10 @@ window.addEventListener('load', function () {
             invalidateOnRefresh: true,
             //end: () => "+=" + (i * window.innerWidth),
             end: function end() {
+              if (isPortrait()) {
+                return "+=" + i * window.innerHeight;
+              }
               return "+=" + i * (window.innerWidth * 0.5);
-              //return "+=" + i * (window.innerWidth)
             }
           }
         });
@@ -320,5 +332,4 @@ window.addEventListener('load', function () {
 });
 window.addEventListener('scroll', function (e) {
   var posTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-  console.log(posTop);
 });
