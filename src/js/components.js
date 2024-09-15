@@ -175,7 +175,10 @@ window.addEventListener('load', () => {
                             let end = (100 - ((100 / imagesClipPath.length) * (imgIndex + 1)));
 
                             if (imgIndex === imagesClipPath.length - 1) {
-                                end = 10;
+                                end = 5;
+                            }
+                            if (imgIndex === 0) {
+                                start = 95;
                             }
 
                             gsap.to(img, {
@@ -188,10 +191,18 @@ window.addEventListener('load', () => {
                                     end: `end ${end}%`,
                                     scrub: true,
                                     onEnter: (e) => {
-                                        img.classList.add('active');
+                                        console.log('onEnter', imgIndex);
+
+                                        for (let index = imgIndex; index >= 0; index--) {
+                                            imagesClipPath[index].classList.add('active');
+                                        }
                                     },
                                     onEnterBack: (e) => {
-                                        img.classList.remove('active');
+                                        console.log('onEnterBack', imgIndex);
+
+                                        for (let index = imgIndex; index < imagesClipPath.length; index++) {
+                                            imagesClipPath[index].classList.remove('active');
+                                        }
                                     },
                                     // markers: true
                                 }

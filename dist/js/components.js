@@ -145,7 +145,10 @@ window.addEventListener('load', function () {
               var start = 100 - imgIndex * 100 / imagesClipPath.length;
               var end = 100 - 100 / imagesClipPath.length * (imgIndex + 1);
               if (imgIndex === imagesClipPath.length - 1) {
-                end = 10;
+                end = 5;
+              }
+              if (imgIndex === 0) {
+                start = 95;
               }
               gsap.to(img, {
                 "--clip": '100%',
@@ -157,10 +160,16 @@ window.addEventListener('load', function () {
                   end: "end ".concat(end, "%"),
                   scrub: true,
                   onEnter: function onEnter(e) {
-                    img.classList.add('active');
+                    console.log('onEnter', imgIndex);
+                    for (var _index = imgIndex; _index >= 0; _index--) {
+                      imagesClipPath[_index].classList.add('active');
+                    }
                   },
                   onEnterBack: function onEnterBack(e) {
-                    img.classList.remove('active');
+                    console.log('onEnterBack', imgIndex);
+                    for (var _index2 = imgIndex; _index2 < imagesClipPath.length; _index2++) {
+                      imagesClipPath[_index2].classList.remove('active');
+                    }
                   }
                   // markers: true
                 }
