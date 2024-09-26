@@ -63,7 +63,8 @@ window.addEventListener('load', () => {
                         previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
                     }
                     
-                    return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
+                    // return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
+                    return (sectionScroller.scrollWidth + previousSectionScroll)
 
                 },
                 pin: true,
@@ -92,7 +93,9 @@ window.addEventListener('load', () => {
                             if (isPortrait()) {
                                 return "+=" + ((i * (window.innerHeight)))    
                             }
-                            return "+=" + ((i * (window.innerWidth * 0.5)))
+                            // return "+=" + ((i * (window.innerWidth * 0.5)))
+
+                            return "+=" + (i * window.innerWidth)
                         },
                     }
                 });
@@ -376,7 +379,9 @@ window.addEventListener('load', () => {
                     if (index > 0) {
                         Array.prototype.slice.call(sectionsScroller, 0, index).forEach(elem => {
                             console.log(elem);
-                            scrollTo += elem.querySelectorAll('.js-screen').length * (window.innerWidth * 0.5);
+                            // scrollTo += elem.querySelectorAll('.js-screen').length * (window.innerWidth * 0.5);
+
+                            scrollTo += elem.querySelectorAll('.js-screen').length * (window.innerWidth);
                         })
                         
                         scrollTo += window.innerHeight
