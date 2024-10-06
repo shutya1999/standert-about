@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSAP Scroll Direction</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <div style="height: 2000px;">
+    Прокрути сторінку вниз або вгору
+  </div>
+
+  <script>
+    let lastScrollTop = 0;
+    let isExecuting = false; // Флаг для перевірки, чи виконується функція
+
+    // Функція для скролу вниз
+    async function onScrollDown() {
+      console.log("down");
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Симуляція асинхронної операції (1 сек)
+    }
+
+    // Функція для скролу вгору
+    async function onScrollUp() {
+      console.log("up");
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Симуляція асинхронної операції (1 сек)
+    }
+
+    // Основна функція для обробки скролу
+    async function handleScroll() {
+      if (!isExecuting) {
+        isExecuting = true; // Позначаємо, що функція почала виконуватись
+        let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScrollTop > lastScrollTop) {
+          // Скролимо вниз
+          await onScrollDown();
+        } else if (currentScrollTop < lastScrollTop) {
+          // Скролимо вгору
+          await onScrollUp();
+        }
+
+        lastScrollTop = currentScrollTop;
+        isExecuting = false; // Після завершення функції, дозволяємо новий виклик
+      }
+    }
+
+    // Додаємо слухач події скролу
+    window.addEventListener("scroll", handleScroll);
+  </script>
+</body>
+</html>

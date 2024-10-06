@@ -38,9 +38,19 @@ window.addEventListener('load', () => {
         sectionsScroller.forEach((sectionScroller, index) => {
             let thumbNails = gsap.utils.toArray(sectionScroller.querySelectorAll(".js-screen"));
 
+
+            let width = window.innerWidth;
+            thumbNails.forEach((thumb, i) => {
+                if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+                    width = (+thumb.dataset.scrollLength) * window.innerWidth;
+                }
+                thumb.dataset.width = (i * width);
+            })
+
             ScrollTrigger.create({
                 trigger: sectionScroller,
                 start: `top top`,
+                preventOverlaps: true,
                 end: () => {
                     if (isPortrait()) {
                         console.log((sectionScroller.querySelectorAll('.js-screen').length - 1) * window.innerHeight);
@@ -62,9 +72,27 @@ window.addEventListener('load', () => {
                     if (sectionsScroller[index - 1]) {
                         previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
                     }
+
+                    console.log(thumbNails);
+                    let scrollHeightThumb = 0;
+                    thumbNails.forEach(thumb => {
+                        let screenCount = 1;
+                        if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+                            screenCount = +thumb.dataset.scrollLength;
+                        }
+                        scrollHeightThumb += (screenCount * window.innerWidth);
+                    })
+                    
+                    // console.log((sectionScroller.scrollWidth + previousSectionScroll));
+                    // console.log(scrollHeightThumb + previousSectionScroll);
+                    // console.log('-----');
+                    
+                    
+                    return scrollHeightThumb + previousSectionScroll;
+                    
                     
                     // return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
-                    return (sectionScroller.scrollWidth + previousSectionScroll)
+                    // return (sectionScroller.scrollWidth + previousSectionScroll)
 
                 },
                 pin: true,
@@ -76,27 +104,47 @@ window.addEventListener('load', () => {
 
             let scrollTweens = [];
 
+            // let offsetThumb = 0;
             thumbNails.forEach((thumb, i) => {
                 let scrollTween = gsap.to(thumb, {
                     x: () => {
-                        return - (i * window.innerWidth)
+
+                        // if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+                        //     offsetThumb += (window.innerWidth / (+thumb.dataset.scrollLength));
+                        //     console.log(offsetThumb);
+                        // }
+
+
+                        // return - (i * window.innerWidth) + offsetThumb;
+
+                        // return - (+thumb.dataset.width);
+
+                        
+                        // return - (+thumb.dataset.width);
+                        
+                        return - (i * window.innerWidth);
                     },
-                    //xPercent: -100,
                     ease: "none",
+                    preventOverlaps: true,
                     scrollTrigger: {
                         trigger: thumb.closest(".section-wrapper"),
                         start: 'top top',
                         scrub: 1,
                         invalidateOnRefresh: true,
-                        //end: () => "+=" + (i * window.innerWidth),
                         end: () => {
                             if (isPortrait()) {
                                 return "+=" + ((i * (window.innerHeight)))    
                             }
-                            // return "+=" + ((i * (window.innerWidth * 0.5)))
+                            
+                            let end = i * window.innerWidth;
 
-                            return "+=" + (i * window.innerWidth)
+                            if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== ''){
+                                end = i * (window.innerWidth * +thumb.dataset.scrollLength)
+                            }
+
+                            return "+=" + end;                            
                         },
+                        // markers: true,
                     }
                 });
                 scrollTweens.push(scrollTween);
@@ -401,4 +449,6 @@ window.addEventListener('load', () => {
 window.addEventListener('scroll', (e) => {
     let posTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;    
 })
+
+
 

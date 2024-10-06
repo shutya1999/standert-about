@@ -35,9 +35,17 @@ window.addEventListener('load', function () {
   if (sectionsScroller.length) {
     sectionsScroller.forEach(function (sectionScroller, index) {
       var thumbNails = gsap.utils.toArray(sectionScroller.querySelectorAll(".js-screen"));
+      var width = window.innerWidth;
+      thumbNails.forEach(function (thumb, i) {
+        if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+          width = +thumb.dataset.scrollLength * window.innerWidth;
+        }
+        thumb.dataset.width = i * width;
+      });
       ScrollTrigger.create({
         trigger: sectionScroller,
         start: "top top",
+        preventOverlaps: true,
         end: function end() {
           if (isPortrait()) {
             console.log((sectionScroller.querySelectorAll('.js-screen').length - 1) * window.innerHeight);
@@ -51,9 +59,24 @@ window.addEventListener('load', function () {
           if (sectionsScroller[index - 1]) {
             previousSectionScroll = sectionsScroller[index - 1].querySelector('.section-wrapper').scrollWidth;
           }
+          console.log(thumbNails);
+          var scrollHeightThumb = 0;
+          thumbNails.forEach(function (thumb) {
+            var screenCount = 1;
+            if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+              screenCount = +thumb.dataset.scrollLength;
+            }
+            scrollHeightThumb += screenCount * window.innerWidth;
+          });
+
+          // console.log((sectionScroller.scrollWidth + previousSectionScroll));
+          // console.log(scrollHeightThumb + previousSectionScroll);
+          // console.log('-----');
+
+          return scrollHeightThumb + previousSectionScroll;
 
           // return (sectionScroller.scrollWidth + previousSectionScroll) * 0.5
-          return sectionScroller.scrollWidth + previousSectionScroll;
+          // return (sectionScroller.scrollWidth + previousSectionScroll)
         },
         pin: true,
         anticipatePin: 1,
@@ -62,27 +85,42 @@ window.addEventListener('load', function () {
         // markers: true
       });
       var scrollTweens = [];
+
+      // let offsetThumb = 0;
       thumbNails.forEach(function (thumb, i) {
         var scrollTween = gsap.to(thumb, {
           x: function x() {
+            // if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+            //     offsetThumb += (window.innerWidth / (+thumb.dataset.scrollLength));
+            //     console.log(offsetThumb);
+            // }
+
+            // return - (i * window.innerWidth) + offsetThumb;
+
+            // return - (+thumb.dataset.width);
+
+            // return - (+thumb.dataset.width);
+
             return -(i * window.innerWidth);
           },
-          //xPercent: -100,
           ease: "none",
+          preventOverlaps: true,
           scrollTrigger: {
             trigger: thumb.closest(".section-wrapper"),
             start: 'top top',
             scrub: 1,
             invalidateOnRefresh: true,
-            //end: () => "+=" + (i * window.innerWidth),
             end: function end() {
               if (isPortrait()) {
                 return "+=" + i * window.innerHeight;
               }
-              // return "+=" + ((i * (window.innerWidth * 0.5)))
-
-              return "+=" + i * window.innerWidth;
+              var end = i * window.innerWidth;
+              if (thumb.dataset.scrollLength !== undefined && thumb.dataset.scrollLength !== '') {
+                end = i * (window.innerWidth * +thumb.dataset.scrollLength);
+              }
+              return "+=" + end;
             }
+            // markers: true,
           }
         });
         scrollTweens.push(scrollTween);
